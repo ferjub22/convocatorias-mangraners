@@ -1007,7 +1007,7 @@ textarea {
    ========================================== */
 .pdf-mode.folio-container {
   width: 210mm !important;
-  height: 297mm !important;
+  height: 295mm !important;
   padding: 12mm 15mm !important;
   border-radius: 0 !important;
   box-shadow: none !important;

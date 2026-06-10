@@ -804,7 +804,7 @@ function scalePreviewSheet() {
   if (sheet.classList.contains("pdf-mode")) {
     wrapper.style.transform = "none";
     wrapper.style.width = "794px";
-    wrapper.style.height = "1123px";
+    wrapper.style.height = "1115px";
     wrapper.style.marginBottom = "0px";
     sheet.style.transform = "none";
     return;
@@ -1089,6 +1089,8 @@ function parseAndFillVoiceText(text) {
 // Download PDF using html2pdf
 function downloadPDF() {
   const element = document.getElementById("folio-preview-card");
+  const wrapper = document.getElementById("preview-scale-wrapper");
+  const panel = document.getElementById("preview-panel");
   const jornada = document.getElementById("inp-jornada").value || "X";
   const equipo = document.getElementById("inp-equipo").value || "Equipo";
   
@@ -1105,20 +1107,48 @@ function downloadPDF() {
     return;
   }
 
-  // Temporarily switch to PDF mode
-  element.classList.remove("preview-mode");
-  element.classList.add("pdf-mode");
+  // Save current scroll position
+  const oldScrollX = window.scrollX;
+  const oldScrollY = window.scrollY;
 
-  const wrapper = document.getElementById("preview-scale-wrapper");
-  const oldTransform = wrapper.style.transform;
-  const oldWidth = wrapper.style.width;
-  const oldHeight = wrapper.style.height;
-  const oldMarginBottom = wrapper.style.marginBottom;
+  // Scroll to top-left to align coordinate system
+  window.scrollTo(0, 0);
+
+  // Save current styles of panel, wrapper, and element
+  const oldPanelDisplay = panel.style.display;
+  const oldPanelWidth = panel.style.width;
+  const oldPanelMinWidth = panel.style.minWidth;
+  const oldPanelPadding = panel.style.padding;
+  const oldPanelMargin = panel.style.margin;
+  const oldPanelOverflow = panel.style.overflow;
   
+  const oldWrapperDisplay = wrapper.style.display;
+  const oldWrapperTransform = wrapper.style.transform;
+  const oldWrapperWidth = wrapper.style.width;
+  const oldWrapperHeight = wrapper.style.height;
+  const oldWrapperMargin = wrapper.style.margin;
+
+  const oldElementMargin = element.style.margin;
+
+  // Temporarily force panel to block and wide enough to prevent centering offsets and cropping
+  panel.style.display = "block";
+  panel.style.width = "850px";
+  panel.style.minWidth = "850px";
+  panel.style.padding = "0px";
+  panel.style.margin = "0px";
+  panel.style.overflow = "visible";
+
+  // Temporarily force wrapper to block and exact dimensions
+  wrapper.style.display = "block";
+  wrapper.style.margin = "0px";
   wrapper.style.transform = "none";
   wrapper.style.width = "794px";
-  wrapper.style.height = "1123px";
-  wrapper.style.marginBottom = "0px";
+  wrapper.style.height = "1115px";
+
+  // Temporarily switch element to PDF mode
+  element.classList.remove("preview-mode");
+  element.classList.add("pdf-mode");
+  element.style.margin = "0px";
 
   // Force synchronous layout reflow
   element.offsetHeight;
@@ -1128,36 +1158,65 @@ function downloadPDF() {
     filename: `Convocatoria_Jornada_${jornada}_${equipo.replace(/\s+/g, "_")}.pdf`,
     image: { type: "jpeg", quality: 0.98 },
     html2canvas: { 
-      scale: 2, 
+      scale: 1, 
       useCORS: true, 
-      logging: true,
-      x: 0,
-      y: 0,
-      scrollX: 0,
-      scrollY: 0
+      logging: true
     },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    pagebreak: { mode: 'legacy' }
   };
 
   // Wait 250ms for browser to render styles and paint before capturing
   setTimeout(() => {
-    html2pdf().set(opt).from(element).save().then(() => {
-      // Restore styling mode
+    html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
+      while (pdf.internal.getNumberOfPages() > 1) {
+        pdf.deletePage(pdf.internal.getNumberOfPages());
+      }
+      pdf.save(`Convocatoria_Jornada_${jornada}_${equipo.replace(/\s+/g, "_")}.pdf`);
+    }).then(() => {
+      // Restore styles
+      panel.style.display = oldPanelDisplay;
+      panel.style.width = oldPanelWidth;
+      panel.style.minWidth = oldPanelMinWidth;
+      panel.style.padding = oldPanelPadding;
+      panel.style.margin = oldPanelMargin;
+      panel.style.overflow = oldPanelOverflow;
+
+      wrapper.style.display = oldWrapperDisplay;
+      wrapper.style.transform = oldWrapperTransform;
+      if (oldWrapperWidth) wrapper.style.width = oldWrapperWidth; else wrapper.style.removeProperty("width");
+      if (oldWrapperHeight) wrapper.style.height = oldWrapperHeight; else wrapper.style.removeProperty("height");
+      wrapper.style.margin = oldWrapperMargin;
+
       element.classList.remove("pdf-mode");
       element.classList.add("preview-mode");
-      wrapper.style.transform = oldTransform;
-      if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
-      if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
-      wrapper.style.marginBottom = oldMarginBottom;
+      element.style.margin = oldElementMargin;
+
+      // Restore scroll position
+      window.scrollTo(oldScrollX, oldScrollY);
       scalePreviewSheet();
     }).catch(e => {
       console.error(e);
+      // Restore styles
+      panel.style.display = oldPanelDisplay;
+      panel.style.width = oldPanelWidth;
+      panel.style.minWidth = oldPanelMinWidth;
+      panel.style.padding = oldPanelPadding;
+      panel.style.margin = oldPanelMargin;
+      panel.style.overflow = oldPanelOverflow;
+
+      wrapper.style.display = oldWrapperDisplay;
+      wrapper.style.transform = oldWrapperTransform;
+      if (oldWrapperWidth) wrapper.style.width = oldWrapperWidth; else wrapper.style.removeProperty("width");
+      if (oldWrapperHeight) wrapper.style.height = oldWrapperHeight; else wrapper.style.removeProperty("height");
+      wrapper.style.margin = oldWrapperMargin;
+
       element.classList.remove("pdf-mode");
       element.classList.add("preview-mode");
-      wrapper.style.transform = oldTransform;
-      if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
-      if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
-      wrapper.style.marginBottom = oldMarginBottom;
+      element.style.margin = oldElementMargin;
+
+      // Restore scroll position
+      window.scrollTo(oldScrollX, oldScrollY);
       scalePreviewSheet();
       alert("Error al compilar el PDF. Inténtalo de nuevo.");
     });

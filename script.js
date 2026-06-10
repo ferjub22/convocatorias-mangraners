@@ -801,21 +801,35 @@ function scalePreviewSheet() {
   
   if (!panel || !wrapper || !sheet) return;
 
-  if (sheet.classList.contains("pdf-mode")) {
-    wrapper.style.transform = "none";
-    wrapper.style.width = "794px";
-    wrapper.style.height = "1115px";
-    wrapper.style.marginBottom = "0px";
-    sheet.style.transform = "none";
-    return;
+  // Force the card to have pdf-export class to match final PDF
+  if (!sheet.classList.contains("pdf-export")) {
+    sheet.classList.add("pdf-export");
   }
+  sheet.classList.remove("preview-mode");
+  sheet.classList.remove("pdf-mode");
 
-  // Preview / Screen Mode: Responsive and unscaled
-  wrapper.style.transform = "none";
-  wrapper.style.width = "100%";
-  wrapper.style.maxWidth = "950px";
-  wrapper.style.height = "auto";
-  wrapper.style.marginBottom = "0px";
+  // Calculate scaling factor based on the preview panel's width
+  const paddingVal = (parseFloat(window.getComputedStyle(panel).paddingLeft) || 30) + 
+                     (parseFloat(window.getComputedStyle(panel).paddingRight) || 30);
+  const panelWidth = panel.clientWidth - paddingVal;
+  const sheetWidth = 794; // Width of A4 page (210mm) in pixels at 96 DPI
+  
+  let scale = panelWidth / sheetWidth;
+  if (scale > 1) scale = 1; // Don't upscale past 100% of A4 size
+  if (scale < 0.2) scale = 0.2; // Floor scaling at 20% to avoid layout collapses
+
+  // Apply scaling to the wrapper
+  wrapper.style.transform = `scale(${scale})`;
+  wrapper.style.transformOrigin = "top center";
+  wrapper.style.width = `${sheetWidth}px`;
+  wrapper.style.maxWidth = "100%";
+  wrapper.style.margin = "0 auto";
+  
+  // Set wrapper height to the scaled height of the sheet to ensure correct scrolling bounds
+  const scaledHeight = sheet.offsetHeight * scale;
+  wrapper.style.height = `${scaledHeight}px`;
+  wrapper.style.marginBottom = "20px";
+  
   sheet.style.transform = "none";
 }
 
@@ -1129,18 +1143,26 @@ function downloadPDF() {
   const origWrapperMargin = scaleWrapper.style.margin;
   const origWrapperMaxWidth = scaleWrapper.style.maxWidth;
   const origWrapperJustify = scaleWrapper.style.justifyContent;
+  const origWrapperTransform = scaleWrapper.style.transform;
+  const origWrapperWidth = scaleWrapper.style.width;
+  const origWrapperHeight = scaleWrapper.style.height;
 
-  // Apply temporary print styles to make the preview card align to 0,0 at full width
+  // Apply temporary print styles to make the preview card align to 0,0 at full width and unscaled
   formPanel.style.setProperty("display", "none", "important");
   previewPanel.style.setProperty("flex", "none", "important");
   previewPanel.style.setProperty("width", "100%", "important");
   previewPanel.style.setProperty("padding", "0", "important");
   previewPanel.style.setProperty("justify-content", "flex-start", "important");
   previewPanel.style.setProperty("align-items", "flex-start", "important");
+  
   scaleWrapper.style.setProperty("margin", "0", "important");
   scaleWrapper.style.setProperty("max-width", "100%", "important");
   scaleWrapper.style.setProperty("justify-content", "flex-start", "important");
+  scaleWrapper.style.setProperty("transform", "none", "important");
+  scaleWrapper.style.setProperty("width", "794px", "important");
+  scaleWrapper.style.setProperty("height", "auto", "important");
 
+  // Force the card to have pdf-export class
   element.classList.remove("preview-mode");
   element.classList.remove("pdf-mode");
   element.classList.add("pdf-export");
@@ -1194,9 +1216,14 @@ function downloadPDF() {
     scaleWrapper.style.margin = origWrapperMargin;
     scaleWrapper.style.maxWidth = origWrapperMaxWidth;
     scaleWrapper.style.justifyContent = origWrapperJustify;
+    scaleWrapper.style.transform = origWrapperTransform;
+    scaleWrapper.style.width = origWrapperWidth;
+    scaleWrapper.style.height = origWrapperHeight;
 
-    element.classList.remove("pdf-export");
-    element.classList.add("preview-mode");
+    // The screen preview now ALWAYS uses pdf-export class
+    element.classList.remove("preview-mode");
+    element.classList.remove("pdf-mode");
+    element.classList.add("pdf-export");
 
     scalePreviewSheet();
   };

@@ -1123,37 +1123,34 @@ function downloadPDF() {
   // Force synchronous layout reflow
   element.offsetHeight;
 
-  // Wait 150ms for browser to render styles before capturing
-  setTimeout(() => {
-    const opt = {
-      margin: 0,
-      filename: `Convocatoria_Jornada_${jornada}_${equipo.replace(/\s+/g, "_")}.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true, logging: false },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
-    };
+  const opt = {
+    margin: 0,
+    filename: `Convocatoria_Jornada_${jornada}_${equipo.replace(/\s+/g, "_")}.pdf`,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, logging: false },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+  };
 
-    html2pdf().set(opt).from(element).save().then(() => {
-      // Restore styling mode
-      element.classList.remove("pdf-mode");
-      element.classList.add("preview-mode");
-      wrapper.style.transform = oldTransform;
-      if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
-      if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
-      wrapper.style.marginBottom = oldMarginBottom;
-      scalePreviewSheet();
-    }).catch(e => {
-      console.error(e);
-      element.classList.remove("pdf-mode");
-      element.classList.add("preview-mode");
-      wrapper.style.transform = oldTransform;
-      if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
-      if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
-      wrapper.style.marginBottom = oldMarginBottom;
-      scalePreviewSheet();
-      alert("Error al compilar el PDF. Inténtalo de nuevo.");
-    });
-  }, 150);
+  html2pdf().set(opt).from(element).save().then(() => {
+    // Restore styling mode
+    element.classList.remove("pdf-mode");
+    element.classList.add("preview-mode");
+    wrapper.style.transform = oldTransform;
+    if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
+    if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
+    wrapper.style.marginBottom = oldMarginBottom;
+    scalePreviewSheet();
+  }).catch(e => {
+    console.error(e);
+    element.classList.remove("pdf-mode");
+    element.classList.add("preview-mode");
+    wrapper.style.transform = oldTransform;
+    if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
+    if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
+    wrapper.style.marginBottom = oldMarginBottom;
+    scalePreviewSheet();
+    alert("Error al compilar el PDF. Inténtalo de nuevo.");
+  });
 }
 
 // Open WhatsApp prepared message

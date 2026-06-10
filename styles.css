@@ -292,6 +292,15 @@ textarea {
   background-color: var(--color-primary-dark);
 }
 
+.btn-accent {
+  background-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.btn-accent:hover {
+  background-color: var(--color-primary);
+}
+
 .btn-secondary {
   background-color: var(--color-text-muted);
   color: #ffffff;

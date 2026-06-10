@@ -1086,19 +1086,22 @@ function parseAndFillVoiceText(text) {
   updateLivePreview();
 }
 
-// Download PDF using html2pdf
+// Download PDF using html2pdf with offscreen position fixed temporary shift and isolated styles
 function downloadPDF() {
   const element = document.getElementById("folio-preview-card");
-  const wrapper = document.getElementById("preview-scale-wrapper");
-  const panel = document.getElementById("preview-panel");
-  const jornada = document.getElementById("inp-jornada").value || "X";
-  const equipo = document.getElementById("inp-equipo").value || "Equipo";
-  
+  if (!element) {
+    alert("Error: No se encontró la convocatoria generada.");
+    return;
+  }
+
   if (convocadosList.length === 0) {
     alert("Agrega jugadores convocados antes de descargar el PDF.");
     return;
   }
 
+  const jornada = document.getElementById("inp-jornada").value || "X";
+  const equipo = document.getElementById("inp-equipo").value || "Equipo";
+  
   // Check limit (15 for Benjamín/Alevín, 18 for others)
   const isBenjOrAlev = equipo.toLowerCase().includes("benjam") || equipo.toLowerCase().includes("alev");
   const limit = isBenjOrAlev ? 15 : 18;
@@ -1107,121 +1110,111 @@ function downloadPDF() {
     return;
   }
 
-  // Save current scroll position
-  const oldScrollX = window.scrollX;
-  const oldScrollY = window.scrollY;
+  const formPanel = document.querySelector(".form-panel");
+  const previewPanel = document.getElementById("preview-panel");
+  const scaleWrapper = document.getElementById("preview-scale-wrapper");
 
-  // Scroll to top-left to align coordinate system
-  window.scrollTo(0, 0);
+  if (!formPanel || !previewPanel || !scaleWrapper) {
+    alert("Error al inicializar la exportación.");
+    return;
+  }
 
-  // Save current styles of panel, wrapper, and element
-  const oldPanelDisplay = panel.style.display;
-  const oldPanelWidth = panel.style.width;
-  const oldPanelMinWidth = panel.style.minWidth;
-  const oldPanelPadding = panel.style.padding;
-  const oldPanelMargin = panel.style.margin;
-  const oldPanelOverflow = panel.style.overflow;
-  
-  const oldWrapperDisplay = wrapper.style.display;
-  const oldWrapperTransform = wrapper.style.transform;
-  const oldWrapperWidth = wrapper.style.width;
-  const oldWrapperHeight = wrapper.style.height;
-  const oldWrapperMargin = wrapper.style.margin;
+  // Save original styles
+  const origFormDisplay = formPanel.style.display;
+  const origPanelFlex = previewPanel.style.flex;
+  const origPanelWidth = previewPanel.style.width;
+  const origPanelPadding = previewPanel.style.padding;
+  const origPanelJustify = previewPanel.style.justifyContent;
+  const origPanelAlign = previewPanel.style.alignItems;
+  const origWrapperMargin = scaleWrapper.style.margin;
+  const origWrapperMaxWidth = scaleWrapper.style.maxWidth;
+  const origWrapperJustify = scaleWrapper.style.justifyContent;
 
-  const oldElementMargin = element.style.margin;
+  // Apply temporary print styles to make the preview card align to 0,0 at full width
+  formPanel.style.setProperty("display", "none", "important");
+  previewPanel.style.setProperty("flex", "none", "important");
+  previewPanel.style.setProperty("width", "100%", "important");
+  previewPanel.style.setProperty("padding", "0", "important");
+  previewPanel.style.setProperty("justify-content", "flex-start", "important");
+  previewPanel.style.setProperty("align-items", "flex-start", "important");
+  scaleWrapper.style.setProperty("margin", "0", "important");
+  scaleWrapper.style.setProperty("max-width", "100%", "important");
+  scaleWrapper.style.setProperty("justify-content", "flex-start", "important");
 
-  // Temporarily force panel to block and wide enough to prevent centering offsets and cropping
-  panel.style.display = "block";
-  panel.style.width = "850px";
-  panel.style.minWidth = "850px";
-  panel.style.padding = "0px";
-  panel.style.margin = "0px";
-  panel.style.overflow = "visible";
-
-  // Temporarily force wrapper to block and exact dimensions
-  wrapper.style.display = "block";
-  wrapper.style.margin = "0px";
-  wrapper.style.transform = "none";
-  wrapper.style.width = "794px";
-  wrapper.style.height = "1115px";
-
-  // Temporarily switch element to PDF mode
   element.classList.remove("preview-mode");
-  element.classList.add("pdf-mode");
-  element.style.margin = "0px";
+  element.classList.remove("pdf-mode");
+  element.classList.add("pdf-export");
 
-  // Force synchronous layout reflow
-  element.offsetHeight;
-
+  // Configure html2pdf options
   const opt = {
-    margin: 0,
+    margin: [8, 8, 8, 8],
     filename: `Convocatoria_Jornada_${jornada}_${equipo.replace(/\s+/g, "_")}.pdf`,
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { 
-      scale: 1, 
-      useCORS: true, 
-      logging: true
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: 794,
+      x: 0,
+      y: 0,
+      width: 794,
+      height: element.scrollHeight
     },
-    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    pagebreak: { mode: 'legacy' }
+    jsPDF: {
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait'
+    },
+    pagebreak: {
+      mode: ['css', 'legacy'],
+      avoid: [
+        '.folio-player-card', 
+        '.folio-no-conv-card', 
+        '.folio-match-card', 
+        '.folio-obs-card', 
+        '.folio-squad-section', 
+        '.folio-bottom-block', 
+        '.folio-header', 
+        '.folio-main-title-block', 
+        '.folio-footer'
+      ]
+    }
   };
 
-  // Wait 250ms for browser to render styles and paint before capturing
+  const restoreStyles = () => {
+    // Restore original layouts and styles
+    formPanel.style.display = origFormDisplay;
+    previewPanel.style.flex = origPanelFlex;
+    previewPanel.style.width = origPanelWidth;
+    previewPanel.style.padding = origPanelPadding;
+    previewPanel.style.justifyContent = origPanelJustify;
+    previewPanel.style.alignItems = origPanelAlign;
+    scaleWrapper.style.margin = origWrapperMargin;
+    scaleWrapper.style.maxWidth = origWrapperMaxWidth;
+    scaleWrapper.style.justifyContent = origWrapperJustify;
+
+    element.classList.remove("pdf-export");
+    element.classList.add("preview-mode");
+
+    scalePreviewSheet();
+  };
+
+  // Wait 250ms for DOM layout and style calculations to complete
   setTimeout(() => {
-    html2pdf().set(opt).from(element).toPdf().get('pdf').then(function(pdf) {
-      while (pdf.internal.getNumberOfPages() > 1) {
-        pdf.deletePage(pdf.internal.getNumberOfPages());
-      }
-      pdf.save(`Convocatoria_Jornada_${jornada}_${equipo.replace(/\s+/g, "_")}.pdf`);
-    }).then(() => {
-      // Restore styles
-      panel.style.display = oldPanelDisplay;
-      panel.style.width = oldPanelWidth;
-      panel.style.minWidth = oldPanelMinWidth;
-      panel.style.padding = oldPanelPadding;
-      panel.style.margin = oldPanelMargin;
-      panel.style.overflow = oldPanelOverflow;
-
-      wrapper.style.display = oldWrapperDisplay;
-      wrapper.style.transform = oldWrapperTransform;
-      if (oldWrapperWidth) wrapper.style.width = oldWrapperWidth; else wrapper.style.removeProperty("width");
-      if (oldWrapperHeight) wrapper.style.height = oldWrapperHeight; else wrapper.style.removeProperty("height");
-      wrapper.style.margin = oldWrapperMargin;
-
-      element.classList.remove("pdf-mode");
-      element.classList.add("preview-mode");
-      element.style.margin = oldElementMargin;
-
-      // Restore scroll position
-      window.scrollTo(oldScrollX, oldScrollY);
-      scalePreviewSheet();
+    html2pdf().set(opt).from(element).save().then(() => {
+      restoreStyles();
     }).catch(e => {
-      console.error(e);
-      // Restore styles
-      panel.style.display = oldPanelDisplay;
-      panel.style.width = oldPanelWidth;
-      panel.style.minWidth = oldPanelMinWidth;
-      panel.style.padding = oldPanelPadding;
-      panel.style.margin = oldPanelMargin;
-      panel.style.overflow = oldPanelOverflow;
-
-      wrapper.style.display = oldWrapperDisplay;
-      wrapper.style.transform = oldWrapperTransform;
-      if (oldWrapperWidth) wrapper.style.width = oldWrapperWidth; else wrapper.style.removeProperty("width");
-      if (oldWrapperHeight) wrapper.style.height = oldWrapperHeight; else wrapper.style.removeProperty("height");
-      wrapper.style.margin = oldWrapperMargin;
-
-      element.classList.remove("pdf-mode");
-      element.classList.add("preview-mode");
-      element.style.margin = oldElementMargin;
-
-      // Restore scroll position
-      window.scrollTo(oldScrollX, oldScrollY);
-      scalePreviewSheet();
+      console.error("Error compiling PDF:", e);
+      restoreStyles();
       alert("Error al compilar el PDF. Inténtalo de nuevo.");
     });
   }, 250);
 }
+
+// Robust function alias as requested
+const descargarPDF = downloadPDF;
 
 // Open WhatsApp prepared message
 function sendWhatsApp() {

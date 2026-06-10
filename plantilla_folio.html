@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Plantilla Folio Convocatoria - CD Mangraners</title>
+  <style>
+    /* Folio styling for live preview and printing */
+    .folio-container {
+      width: 100%;
+      max-width: 950px;
+      background-color: #ffffff;
+      padding: 40px 50px;
+      font-family: 'Inter', sans-serif;
+      color: #1F2933;
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      position: relative;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      border-radius: 8px;
+      margin: 0 auto;
+      gap: 20px;
+    }
+
+    .folio-top-stripe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(to right, #0B3D2E, #146B4D, #6BBF59, #C6A15B);
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
+    /* Header */
+    .folio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #C6A15B;
+      margin-bottom: 10px;
+    }
+
+    .folio-logo-title {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .folio-logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .folio-logo {
+      height: 75px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .folio-logo-placeholder {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0B3D2E, #146B4D);
+      border: 2px solid #C6A15B;
+      color: #ffffff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .folio-club-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .folio-club-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #0B3D2E;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+
+    .folio-club-slogan {
+      font-size: 13px;
+      color: #146B4D;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-top: 4px;
+    }
+
+    .folio-club-sub {
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .folio-doc-title-container {
+      text-align: right;
+    }
+
+    .folio-doc-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #C6A15B;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+    }
+
+    .folio-doc-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      font-weight: 600;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Main Title block */
+    .folio-main-title-block {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .folio-main-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      color: #0B3D2E;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+
+    .folio-main-subtitle {
+      font-size: 16px;
+      color: #146B4D;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    /* Match card */
+    .folio-match-card {
+      background-color: #F4F6F5;
+      border: 1.5px solid #cbd5e1;
+      border-left: 6px solid #C6A15B;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    .folio-match-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px 20px;
+    }
+
+    .folio-match-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .folio-match-item.col-span-2 {
+      grid-column: span 2;
+    }
+
+    .folio-match-label {
+      font-size: 11px;
+      font-weight: 800;
+      color: #146B4D;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .folio-match-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1F2933;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .folio-badge-condicion {
+      display: inline-block;
+      background-color: #0B3D2E;
+      color: #FFFFFF;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    .folio-badge-condicion.fuera {
+      background-color: #C6A15B;
+    }
+
+    /* Content Area */
+    .folio-squad-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      min-height: 0;
+    }
+
+    .folio-section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #0B3D2E;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border-bottom: 2px solid #146B4D;
+      padding-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Player Grid */
+    .folio-player-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 16px;
+      align-content: start;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .folio-player-card {
+      background-color: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-left: 4.5px solid #146B4D;
+      border-radius: 6px;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      height: 48px;
+      box-sizing: border-box;
+    }
+
+    .folio-player-num {
+      font-family: 'Outfit', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: #C6A15B;
+      background-color: #F4F6F5;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .folio-player-details {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .folio-player-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1F2933;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .folio-player-pos {
+      font-size: 11px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      background-color: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-left: 5px;
+    }
+
+    .folio-empty-placeholder {
+      grid-column: span 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      font-size: 15px;
+      color: #64748b;
+      font-style: italic;
+      border: 1.5px dashed #cbd5e1;
+      border-radius: 6px;
+      padding: 20px;
+    }
+
+    /* Bottom Section */
+    .folio-bottom-block {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    /* Observations */
+    .folio-obs-card {
+      background-color: #fbf8f2;
+      border: 1.5px solid #e2e8f0;
+      border-left: 4.5px solid #C6A15B;
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+
+    .folio-obs-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: #b5904a;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .folio-obs-body {
+      font-size: 15px;
+      line-height: 1.4;
+      color: #78350f;
+    }
+
+    /* Non Convocados */
+    .folio-no-conv-card {
+      background-color: #F4F6F5;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 16px 20px;
+    }
+
+    .folio-no-conv-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .folio-no-conv-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .folio-no-conv-row {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    .folio-no-conv-badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      width: 120px;
+      text-align: center;
+      margin-right: 15px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .folio-badge-dt { background-color: #cbd5e1; color: #1F2933; }
+    .folio-badge-injury { background-color: #fee2e2; color: #ef4444; }
+    .folio-badge-suspension { background-color: #fef3c7; color: #b45309; }
+
+    .folio-no-conv-player {
+      font-weight: 700;
+      color: #1F2933;
+      width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .folio-no-conv-desc {
+      color: #64748b;
+      font-style: italic;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Footer */
+    .folio-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1.5px solid #e2e8f0;
+      padding-top: 15px;
+      margin-top: 10px;
+    }
+
+    .folio-footer-info {
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    .folio-footer-motto {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      color: #C6A15B;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .folio-signature-container {
+      text-align: center;
+      font-size: 11px;
+      color: #64748b;
+      width: 180px;
+    }
+
+    .folio-signature-line {
+      border-top: 1.5px dashed #64748b;
+      margin-top: 25px;
+      padding-top: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================
+       PDF/Print Mode Specific Overrides (Exact A4)
+       ========================================== */
+    .pdf-mode.folio-container {
+      width: 210mm !important;
+      height: 297mm !important;
+      padding: 12mm 15mm !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      justify-content: space-between !important;
+      gap: 0 !important;
+    }
+
+    .pdf-mode .folio-top-stripe {
+      border-radius: 0 !important;
+      height: 6px !important;
+    }
+
+    .pdf-mode .folio-header {
+      padding-bottom: 12px !important;
+      border-bottom: 2px solid #C6A15B !important;
+      margin-bottom: 12px !important;
+    }
+
+    .pdf-mode .folio-logo {
+      height: 55px !important;
+    }
+
+    .pdf-mode .folio-logo-placeholder {
+      width: 55px !important;
+      height: 55px !important;
+      font-size: 18px !important;
+    }
+
+    .pdf-mode .folio-club-name {
+      font-size: 24px !important;
+      line-height: 1.1 !important;
+    }
+
+    .pdf-mode .folio-club-slogan {
+      font-size: 11px !important;
+      margin-top: 2px !important;
+    }
+
+    .pdf-mode .folio-club-sub {
+      font-size: 9px !important;
+      margin-top: 1px !important;
+    }
+
+    .pdf-mode .folio-doc-title {
+      font-size: 16px !important;
+    }
+
+    .pdf-mode .folio-doc-subtitle {
+      font-size: 10px !important;
+      margin-top: 2px !important;
+    }
+
+    .pdf-mode .folio-main-title-block {
+      margin-bottom: 12px !important;
+    }
+
+    .pdf-mode .folio-main-title {
+      font-size: 20px !important;
+    }
+
+    .pdf-mode .folio-main-subtitle {
+      font-size: 12px !important;
+      margin-top: 4px !important;
+    }
+
+    .pdf-mode .folio-match-card {
+      padding: 10px 14px !important;
+      margin-bottom: 12px !important;
+      border-radius: 6px !important;
+      border-width: 1px !important;
+      border-left-width: 4px !important;
+    }
+
+    .pdf-mode .folio-match-grid {
+      gap: 8px 12px !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+    }
+
+    .pdf-mode .folio-match-label {
+      font-size: 8px !important;
+      margin-bottom: 2px !important;
+    }
+
+    .pdf-mode .folio-match-value {
+      font-size: 11px !important;
+    }
+
+    .pdf-mode .folio-badge-condicion {
+      font-size: 8px !important;
+      padding: 1px 6px !important;
+    }
+
+    .pdf-mode .folio-squad-section {
+      margin-bottom: 12px !important;
+    }
+
+    .pdf-mode .folio-section-title {
+      font-size: 13px !important;
+      margin-bottom: 8px !important;
+      padding-bottom: 3px !important;
+    }
+
+    .pdf-mode .folio-player-grid {
+      gap: 6px 12px !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .pdf-mode .folio-player-card {
+      height: 34px !important;
+      padding: 5px 10px !important;
+      gap: 10px !important;
+      border-radius: 4px !important;
+      border-width: 1px !important;
+      border-left-width: 3.5px !important;
+    }
+
+    .pdf-mode .folio-player-num {
+      font-size: 11px !important;
+      width: 20px !important;
+      height: 20px !important;
+    }
+
+    .pdf-mode .folio-player-name {
+      font-size: 10.5px !important;
+    }
+
+    .pdf-mode .folio-player-pos {
+      font-size: 8px !important;
+    }
+
+    .pdf-mode .folio-obs-card {
+      padding: 8px 12px !important;
+      border-radius: 6px !important;
+      border-width: 1px !important;
+      border-left-width: 3.5px !important;
+    }
+
+    .pdf-mode .folio-obs-title {
+      font-size: 10px !important;
+      margin-bottom: 2px !important;
+    }
+
+    .pdf-mode .folio-obs-body {
+      font-size: 9.5px !important;
+      line-height: 1.3 !important;
+    }
+
+    .pdf-mode .folio-no-conv-card {
+      padding: 8px 12px !important;
+      border-radius: 6px !important;
+      border-width: 1px !important;
+    }
+
+    .pdf-mode .folio-no-conv-title {
+      font-size: 10px !important;
+      margin-bottom: 4px !important;
+    }
+
+    .pdf-mode .folio-no-conv-grid {
+      gap: 4px !important;
+    }
+
+    .pdf-mode .folio-no-conv-row {
+      font-size: 9.5px !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      border-bottom: none !important;
+      padding-bottom: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .pdf-mode .folio-no-conv-badge {
+      font-size: 7.5px !important;
+      width: 90px !important;
+      margin-right: 10px !important;
+      padding: 1px 5px !important;
+      border-radius: 3px !important;
+    }
+
+    .pdf-mode .folio-no-conv-player {
+      font-size: 9.5px !important;
+      width: 170px !important;
+      margin-right: 10px !important;
+    }
+
+    .pdf-mode .folio-no-conv-desc {
+      font-size: 9.5px !important;
+      width: auto !important;
+      white-space: nowrap !important;
+    }
+
+    .pdf-mode .folio-footer {
+      padding-top: 6px !important;
+      margin-top: 5px !important;
+    }
+
+    .pdf-mode .folio-footer-motto {
+      font-size: 9px !important;
+    }
+
+    .pdf-mode .folio-footer-info {
+      font-size: 8px !important;
+    }
+
+    .pdf-mode .folio-signature-container {
+      width: 140px !important;
+      font-size: 8px !important;
+    }
+
+    .pdf-mode .folio-signature-line {
+      margin-top: 15px !important;
+      padding-top: 2px !important;
+      font-size: 8px !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- This is the template structure that the script will inject into the DOM or print window -->
+  <div id="folio-preview-card" class="folio-container">
+    <div class="folio-top-stripe"></div>
+
+    <!-- Header -->
+    <div class="folio-header">
+      <div class="folio-logo-title">
+        <div class="folio-logo-container">
+          <img class="folio-logo" src="logo_club.png" alt="CD Mangraners Escudo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="folio-logo-placeholder" style="display: none;">CDM</div>
+        </div>
+        <div class="folio-club-title">
+          <span class="folio-club-name">MAGRANERS, C.D. A</span>
+          <span class="folio-club-slogan">Campions dins i fora del camp</span>
+          <span class="folio-club-sub">Som un projecte de formació, competició i valors</span>
+        </div>
+      </div>
+      <div class="folio-doc-title-container">
+        <span class="folio-doc-title">Convocatoria</span>
+        <span class="folio-doc-subtitle">Oficial</span>
+      </div>
+    </div>
+
+    <!-- Centered main title -->
+    <div class="folio-main-title-block">
+      <h2 class="folio-main-title">CONVOCATORIA OFICIAL</h2>
+      <div class="folio-main-subtitle">Jornada {{Jornada}} — {{Equipo}}</div>
+    </div>
+
+    <!-- Match Card Details Block -->
+    <div class="folio-match-card">
+      <div class="folio-match-grid">
+        <div class="folio-match-item col-span-2">
+          <span class="folio-match-label">Rival</span>
+          <span class="folio-match-value">{{Rival}}</span>
+        </div>
+        <div class="folio-match-item">
+          <span class="folio-match-label">Día del Partido</span>
+          <span class="folio-match-value">{{FechaHoraSplitDia}}</span>
+        </div>
+        <div class="folio-match-item">
+          <span class="folio-match-label">Hora Partido</span>
+          <span class="folio-match-value">{{FechaHoraSplitHora}}</span>
+        </div>
+        <div class="folio-match-item col-span-2">
+          <span class="folio-match-label">Campo / Instalación</span>
+          <span class="folio-match-value">{{Campo}}</span>
+        </div>
+        <div class="folio-match-item">
+          <span class="folio-match-label">Hora Llegada</span>
+          <span class="folio-match-value">{{HoraLlegada}}</span>
+        </div>
+        <div class="folio-match-item">
+          <span class="folio-match-label">Condición</span>
+          <span class="folio-badge-condicion {{CondicionClass}}">{{Condicion}}</span>
+        </div>
+        <div class="folio-match-item col-span-2">
+          <span class="folio-match-label">Equipación Oficial</span>
+          <span class="folio-match-value">{{Equipacion}}</span>
+        </div>
+        <div class="folio-match-item col-span-2">
+          <span class="folio-match-label">Cuerpo Técnico</span>
+          <span class="folio-match-value">{{CuerpoTecnico}}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Squad Convocados -->
+    <div class="folio-squad-section">
+      <div class="folio-section-title">Jugadores Convocados</div>
+      <div class="folio-player-grid">
+        {{ConvocadosRows}}
+      </div>
+    </div>
+
+    <!-- Bottom Block (Observations & No Convocados) -->
+    <div class="folio-bottom-block">
+      <!-- Observations -->
+      <div class="folio-obs-card" id="folio-obs-container" style="{{ShowObservations}}">
+        <div class="folio-obs-title">Observaciones de Convocatoria</div>
+        <div class="folio-obs-body">{{Observaciones}}</div>
+      </div>
+
+      <!-- Non convocados -->
+      <div class="folio-no-conv-card" id="folio-noconv-container" style="{{ShowNoConvocados}}">
+        <div class="folio-no-conv-title">Situación de Plantilla (No Convocados)</div>
+        <div class="folio-no-conv-grid">
+          {{NoConvocadosRows}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="folio-footer">
+      <div class="folio-footer-info">
+        <div class="folio-footer-motto">Som un projecte de formació, competició i valors</div>
+        <div>CD Mangraners — Coordinación Deportiva</div>
+        <div style="font-size: 7px; color: #94a3b8; margin-top: 1px;">Documento generado automáticamente para uso interno del club</div>
+      </div>
+      <div class="folio-signature-container">
+        <div class="folio-signature-line" id="folio-signature-label">{{FirmaResponsable}}</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

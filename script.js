@@ -1131,26 +1131,29 @@ function downloadPDF() {
     jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
   };
 
-  html2pdf().set(opt).from(element).save().then(() => {
-    // Restore styling mode
-    element.classList.remove("pdf-mode");
-    element.classList.add("preview-mode");
-    wrapper.style.transform = oldTransform;
-    if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
-    if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
-    wrapper.style.marginBottom = oldMarginBottom;
-    scalePreviewSheet();
-  }).catch(e => {
-    console.error(e);
-    element.classList.remove("pdf-mode");
-    element.classList.add("preview-mode");
-    wrapper.style.transform = oldTransform;
-    if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
-    if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
-    wrapper.style.marginBottom = oldMarginBottom;
-    scalePreviewSheet();
-    alert("Error al compilar el PDF. Inténtalo de nuevo.");
-  });
+  // Wait 250ms for browser to render styles and paint before capturing
+  setTimeout(() => {
+    html2pdf().set(opt).from(element).save().then(() => {
+      // Restore styling mode
+      element.classList.remove("pdf-mode");
+      element.classList.add("preview-mode");
+      wrapper.style.transform = oldTransform;
+      if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
+      if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
+      wrapper.style.marginBottom = oldMarginBottom;
+      scalePreviewSheet();
+    }).catch(e => {
+      console.error(e);
+      element.classList.remove("pdf-mode");
+      element.classList.add("preview-mode");
+      wrapper.style.transform = oldTransform;
+      if (oldWidth) wrapper.style.width = oldWidth; else wrapper.style.removeProperty("width");
+      if (oldHeight) wrapper.style.height = oldHeight; else wrapper.style.removeProperty("height");
+      wrapper.style.marginBottom = oldMarginBottom;
+      scalePreviewSheet();
+      alert("Error al compilar el PDF. Inténtalo de nuevo.");
+    });
+  }, 250);
 }
 
 // Open WhatsApp prepared message

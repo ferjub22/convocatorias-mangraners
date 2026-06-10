@@ -1014,6 +1014,8 @@ textarea {
   margin: 0 !important;
   justify-content: space-between !important;
   gap: 0 !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
 .pdf-mode .folio-top-stripe {

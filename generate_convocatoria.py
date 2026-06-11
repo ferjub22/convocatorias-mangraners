@@ -289,8 +289,8 @@ def main():
         .replace("{{FirmaResponsable}}", signature_label)
 
     # Force the PDF compilation stylesheet rule by swapping the class
-    replaced = replaced.replace('class="folio-container"', 'class="folio-container pdf-mode"')
-    replaced = replaced.replace('class="folio-container preview-mode"', 'class="folio-container pdf-mode"')
+    replaced = replaced.replace('class="folio-container"', 'class="folio-container pdf-export"')
+    replaced = replaced.replace('class="folio-container preview-mode"', 'class="folio-container pdf-export"')
     
     # Inject page layout rules for headless printing
     print_style = """
@@ -309,7 +309,7 @@ def main():
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      .pdf-mode.folio-container {
+      .pdf-export.folio-container {
         width: 210mm !important;
         height: 297mm !important;
         box-sizing: border-box !important;

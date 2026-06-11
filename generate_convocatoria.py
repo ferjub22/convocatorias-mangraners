@@ -195,7 +195,9 @@ def main():
     dia = match_data.get("dia", "[Día]")
     hora = match_data.get("hora", "A confirmar")
     campo = match_data.get("campo", "[Campo de juego]")
-    condicion = match_data.get("condicion", "Fuera")
+    condicion = match_data.get("condicion", "Visitante")
+    if condicion == "Fuera":
+        condicion = "Visitante"
     llegada = calculate_arrival_time(hora)
     
     # Staff & Category
@@ -262,7 +264,7 @@ def main():
         
     # Replace placeholder tags
     signature_label = f"{cuerpo.split(' y ')[0].split(',')[0]} (DT)"
-    condicion_class = "fuera" if condicion.lower() == "fuera" else ""
+    condicion_class = "fuera" if (condicion.lower() == "fuera" or condicion.lower() == "visitante") else ""
     show_obs_style = "display: block;" if obs else "display: none;"
     show_no_conv_style = "display: block;" if no_convocados else "display: none;"
     

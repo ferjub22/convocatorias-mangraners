@@ -321,10 +321,10 @@ function autoPopulateMatchDetails() {
     
     document.getElementById("inp-rival").value = match.rival || "";
     
-    if (match.condicion === "Local" || match.condicion === "Fuera") {
-      document.getElementById("inp-condicion").value = match.condicion;
+    if (match.condicion === "Local" || match.condicion === "Fuera" || match.condicion === "Visitante") {
+      document.getElementById("inp-condicion").value = match.condicion === "Fuera" ? "Visitante" : match.condicion;
     } else {
-      document.getElementById("inp-condicion").value = "Fuera";
+      document.getElementById("inp-condicion").value = "Visitante";
     }
     
     document.getElementById("inp-dia").value = match.dia || "";
@@ -700,7 +700,7 @@ function updateLivePreview() {
   const hora = document.getElementById("inp-hora").value || "[Hora]";
   const llegada = document.getElementById("inp-llegada").value || "[Hora]";
   const campo = document.getElementById("inp-campo").value || "[Campo de juego]";
-  const condicion = document.getElementById("inp-condicion").value || "Fuera";
+  const condicion = document.getElementById("inp-condicion").value || "Visitante";
   const equipacion = document.getElementById("inp-equipacion").value || "[Equipación]";
   const cuerpo = document.getElementById("inp-cuerpo").value || "[Cuerpo técnico]";
   const obs = document.getElementById("inp-obs").value.trim();
@@ -764,7 +764,7 @@ function updateLivePreview() {
   const signatureLabel = `${dts} (DT)`;
 
   // 6. Replace Placeholders in template
-  const condicionClass = (condicion.toLowerCase() === "fuera") ? "fuera" : "";
+  const condicionClass = (condicion.toLowerCase() === "fuera" || condicion.toLowerCase() === "visitante") ? "fuera" : "";
 
   let replaced = templateHtml
     .replace(/{{Jornada}}/g, jornada)
@@ -842,7 +842,7 @@ function loadDemoData() {
   document.getElementById("inp-hora").value = "17:45";
   document.getElementById("inp-llegada").value = "16:45";
   document.getElementById("inp-campo").value = "Camp Municipal de Mollerussa";
-  document.getElementById("inp-condicion").value = "Fuera";
+  document.getElementById("inp-condicion").value = "Visitante";
   document.getElementById("inp-equipacion").value = "1ª Equipación (Camiseta verde, pantalón blanco y medias verdes)";
   document.getElementById("inp-cuerpo").value = "Federico Ferreira y Joel Benitez";
   document.getElementById("inp-obs").value = "Presentación en el campo 1 hora antes del partido con la ropa del club.";
@@ -890,7 +890,7 @@ function clearForm() {
     document.getElementById("inp-hora").value = "";
     document.getElementById("inp-llegada").value = "";
     document.getElementById("inp-campo").value = "";
-    document.getElementById("inp-condicion").value = "Fuera";
+    document.getElementById("inp-condicion").value = "Visitante";
     document.getElementById("inp-equipacion").value = "";
     document.getElementById("inp-cuerpo").value = "";
     document.getElementById("inp-obs").value = "";

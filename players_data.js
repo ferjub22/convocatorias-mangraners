@@ -99,50 +99,6 @@ const CD_MANGRANERS_PLAYERS = {
     {
       "name": "Marcos Alejandro Rivas Araujo",
       "pos": "Extremo Der"
-    },
-    {
-      "name": "Marcos Elias Mora Martinez",
-      "pos": "Delantero"
-    },
-    {
-      "name": "Mathias Fernando Patiño Espinola",
-      "pos": "Lateral Izquier"
-    },
-    {
-      "name": "Matias Gaston Nuñez Rios",
-      "pos": "Central"
-    },
-    {
-      "name": "Nicolas Garcete Martinez",
-      "pos": "lateral izquierdo"
-    },
-    {
-      "name": "Oscar Jhosias Baez Gimenez",
-      "pos": "Portero"
-    },
-    {
-      "name": "Pablo Daniel Cano Gaona",
-      "pos": "Delantero"
-    },
-    {
-      "name": "Santiago Agustin Fleitas Ferreira",
-      "pos": "Central"
-    },
-    {
-      "name": "Sebastian Daniel Rojas Guillen",
-      "pos": "Lateral Der"
-    },
-    {
-      "name": "Tobias Isidro Rojas Cespedes",
-      "pos": "Central"
-    },
-    {
-      "name": "Virgilio Samuel Duarte Recalde",
-      "pos": "volante izquierda"
-    },
-    {
-      "name": "Yonathan David Gamarra Lopez",
-      "pos": "Lateral Derecho"
     }
   ],
   "Aleví S11": [
@@ -245,38 +201,6 @@ const CD_MANGRANERS_PLAYERS = {
     {
       "name": "Raul Esteban Alfonzo Reyes",
       "pos": "Central"
-    },
-    {
-      "name": "Roger Adrian Arce Escurra",
-      "pos": "Volante Central"
-    },
-    {
-      "name": "Santiago Rafael Aquino Ortiz",
-      "pos": "Delantero Centro"
-    },
-    {
-      "name": "Santiago Sanchez Salinas",
-      "pos": "Media Punta"
-    },
-    {
-      "name": "Thiago Josué Ruíz Alfonso",
-      "pos": "Defensor"
-    },
-    {
-      "name": "Tiago Israel Gavilan Torales",
-      "pos": "Delantero"
-    },
-    {
-      "name": "Victor Daniel Alarcon Ruiz",
-      "pos": "Volante Central"
-    },
-    {
-      "name": "Viersan Javier Rodriguez Lopez",
-      "pos": "Volante Interior"
-    },
-    {
-      "name": "Willian Mathias Campuzano Villate",
-      "pos": "Volante"
     }
   ],
   "Aleví S12": [
@@ -378,50 +302,6 @@ const CD_MANGRANERS_PLAYERS = {
     },
     {
       "name": "Luis Miguel Corrales Echague",
-      "pos": "Delantero"
-    },
-    {
-      "name": "Mathias Ezequiel Lopez Valiente",
-      "pos": "Defensor"
-    },
-    {
-      "name": "Matías Armando Cardenas Acosta",
-      "pos": "Delantero"
-    },
-    {
-      "name": "Miguel Angel Avalos Gonzalez",
-      "pos": "Lateral Izquierdo"
-    },
-    {
-      "name": "Milton Ariel Chamorro Maciel",
-      "pos": "Extremo derecha"
-    },
-    {
-      "name": "Nicolas Johan Bareiro Cañete",
-      "pos": "Lateral Izquierdo"
-    },
-    {
-      "name": "Pedro Damian Diaz Montiel",
-      "pos": "Extremo izquierda"
-    },
-    {
-      "name": "Ronald Fabian Perez Velotto",
-      "pos": "Lateral Izquierdo"
-    },
-    {
-      "name": "Santiago Ismael Acosta",
-      "pos": "Volante Central"
-    },
-    {
-      "name": "Sergio David Osorio Gonzalez",
-      "pos": "Volante Central"
-    },
-    {
-      "name": "Tobias Nicolas Cañete Rolon",
-      "pos": "Lateral Izquierdo"
-    },
-    {
-      "name": "Aldo Andres Torres Vazquez",
       "pos": "Delantero"
     }
   ],
@@ -525,34 +405,6 @@ const CD_MANGRANERS_PLAYERS = {
     {
       "name": "Mauro Manuel Monges Fernandez",
       "pos": "volante central"
-    },
-    {
-      "name": "Oliver Nicolas Garary Portillo",
-      "pos": "Lateral Izquierdo"
-    },
-    {
-      "name": "Pedro Yovani González Godoy",
-      "pos": "Lateral Izquierdo"
-    },
-    {
-      "name": "Ricardo Jose Rodriguez Herrera",
-      "pos": "delantero"
-    },
-    {
-      "name": "Ruben de Jesus Jara Aceval",
-      "pos": "Portero"
-    },
-    {
-      "name": "Thiago Jesus Agüero Gimenez",
-      "pos": "Defensa Central"
-    },
-    {
-      "name": "Thiago Jesus Ojeda Toledo",
-      "pos": "Portero"
-    },
-    {
-      "name": "Vidal Ramon Gamarra Romero",
-      "pos": "Extremo Derecho"
     }
   ],
   "Cadet S16": [
@@ -655,18 +507,6 @@ const CD_MANGRANERS_PLAYERS = {
     {
       "name": "Samuel Ezequiel Fernandez Gola",
       "pos": "Central Derecha"
-    },
-    {
-      "name": "Tobias Ezequiel Santacruz Barrios",
-      "pos": "Portero"
-    },
-    {
-      "name": "Tomas Ariel Gimenez Gavilan",
-      "pos": "Extremo Izquierda"
-    },
-    {
-      "name": "Victor Isaias Bogarin Penayo",
-      "pos": "Lateral Izquierdo"
     }
   ],
   "Juvenil": [
@@ -765,6 +605,10 @@ const CD_MANGRANERS_PLAYERS = {
     {
       "name": "Walisson Dos Santos Silva",
       "pos": "lateral derecho"
+    },
+    {
+      "name": "Diego Martin Almada Ortiz",
+      "pos": "Volante Central"
     }
   ],
   "Quarta Catalana": [
@@ -827,6 +671,46 @@ const CD_MANGRANERS_PLAYERS = {
     {
       "name": "Ariel Luciano Benitez Guillen",
       "pos": "Lateral derecho"
+    },
+    {
+      "name": "Mateo Silva Benitez",
+      "pos": "Portero"
+    },
+    {
+      "name": "Lucas Ferreira Lopez",
+      "pos": "Delantero Centro"
+    },
+    {
+      "name": "Thiago Garcete Romero",
+      "pos": "Volante Derecho"
+    },
+    {
+      "name": "Santiago Franco Medina",
+      "pos": "Central"
+    },
+    {
+      "name": "Nicolas Rojas Gaona",
+      "pos": "Lateral Izquierdo"
+    },
+    {
+      "name": "Marc Pujol Vila",
+      "pos": "Extremo Derecho"
+    },
+    {
+      "name": "Pol Soler Serra",
+      "pos": "Volante Central"
+    },
+    {
+      "name": "Biel Bosch Torrent",
+      "pos": "Lateral Derecho"
+    },
+    {
+      "name": "Nil Casanovas Riera",
+      "pos": "Extremo Izquierdo"
+    },
+    {
+      "name": "Jan Font Crusat",
+      "pos": "Delantero Centro"
     }
   ]
 };

@@ -149,7 +149,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     updateLivePreview();
-    alert("¡Vista previa de convocatoria generada con éxito!");
   });
 
   // Watch scale preview
@@ -1279,7 +1278,4 @@ function sendWhatsApp() {
 
   // Open link
   window.open(url, "_blank");
-
-  // Inform trainer to attach PDF manually
-  alert("Se ha abierto WhatsApp Web con el mensaje preconfigurado.\n\nRecuerda adjuntar manualmente el PDF descargado en el chat para enviar la ficha oficial.");
 }

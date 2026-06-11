@@ -294,6 +294,7 @@ def main():
     
     # Inject page layout rules for headless printing
     print_style = """
+    <link rel="stylesheet" href="styles.css">
     <style>
       @page {
         size: A4 portrait;

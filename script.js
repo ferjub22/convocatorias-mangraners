@@ -1168,20 +1168,13 @@ function downloadPDF() {
 
   // Configure html2pdf options
   const opt = {
-    margin: [8, 8, 8, 8],
+    margin: 0,
     filename: `Convocatoria_Jornada_${jornada}_${equipo.replace(/\s+/g, "_")}.pdf`,
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: {
       scale: 2,
       useCORS: true,
-      backgroundColor: '#ffffff',
-      scrollX: 0,
-      scrollY: 0,
-      windowWidth: 794,
-      x: 0,
-      y: 0,
-      width: 794,
-      height: element.scrollHeight
+      backgroundColor: '#ffffff'
     },
     jsPDF: {
       unit: 'mm',

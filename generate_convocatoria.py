@@ -141,7 +141,7 @@ def main():
     parser.add_argument("--convocados", type=str, help="Nombres de convocados separados por comas")
     parser.add_argument("--no-convocados", type=str, help="Nombres y motivos de no convocados (ej: 'Nombre:lesion,Nombre2:tecnica')")
     parser.add_argument("--observaciones", type=str, help="Texto de observaciones adicionales")
-    parser.add_argument("--equipacion", type=str, default="1ª Equipación (Camiseta verde, pantalón blanco y medias verdes)", help="Equipación oficial")
+    parser.add_argument("--equipacion", type=str, default="1ª Equipación (Verde/Blanco)", help="Equipación oficial")
     
     args = parser.parse_args()
 

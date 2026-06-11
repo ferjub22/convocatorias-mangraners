@@ -843,7 +843,7 @@ function loadDemoData() {
   document.getElementById("inp-llegada").value = "16:45";
   document.getElementById("inp-campo").value = "Camp Municipal de Mollerussa";
   document.getElementById("inp-condicion").value = "Visitante";
-  document.getElementById("inp-equipacion").value = "1ª Equipación (Camiseta verde, pantalón blanco y medias verdes)";
+  document.getElementById("inp-equipacion").value = "1ª Equipación (Verde/Blanco)";
   document.getElementById("inp-cuerpo").value = "Federico Ferreira y Joel Benitez";
   document.getElementById("inp-obs").value = "Presentación en el campo 1 hora antes del partido con la ropa del club.";
 
@@ -1037,9 +1037,9 @@ function parseAndFillVoiceText(text) {
     const kitText = eMatch[1].toLowerCase();
     const kitSelect = document.getElementById("inp-equipacion");
     if (kitText.includes("segunda") || kitText.includes("2") || kitText.includes("negra") || kitText.includes("alternativa")) {
-      kitSelect.value = "2ª Equipación (Camiseta negra, pantalón negro y medias negras)";
+      kitSelect.value = "2ª Equipación (Negra)";
     } else {
-      kitSelect.value = "1ª Equipación (Camiseta verde, pantalón blanco y medias verdes)";
+      kitSelect.value = "1ª Equipación (Verde/Blanco)";
     }
   }
 

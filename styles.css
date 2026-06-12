@@ -1,66 +1,110 @@
-/* Core variables and resets */
+/* ==========================================================================
+   CD Mangraners - Planificador de Convocatorias
+   Design System & Styling Sheet (From Scratch)
+   ========================================================================== */
+
+/* 1. Imports & Variables */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap');
+
 :root {
-  --color-primary: #0B3D2E;         /* Verde oscuro principal */
-  --color-primary-dark: #052219;    /* Darker Verde oscuro */
-  --color-primary-medium: #146B4D;  /* Verde medio */
-  --color-primary-light: #e8f3ee;   /* Soft Light Green background */
-  --color-accent: #146B4D;          /* Accent Green */
-  --color-green-light: #6BBF59;     /* Verde claro/acento */
-  --color-gold: #C6A15B;            /* Dorado suave */
-  --color-gold-dark: #b5904a;       /* Darker Gold */
-  --color-gold-light: #fbf8f2;      /* Golden Light Background */
-  --color-text-dark: #1F2933;       /* Texto oscuro */
-  --color-text-light: #f8fafc;      /* White-gray */
-  --color-text-muted: #64748b;      /* Slate Gray */
-  --color-border: #cbd5e1;          /* Border slate */
-  --color-border-light: #e2e8f0;    /* Light Border */
-  --color-bg-card: #ffffff;
-  --color-bg-dashboard: #F4F6F5;    /* Gris claro de fondo */
+  /* Brand Color Tokens */
+  --color-primary: #0d1b2f;       /* Dark Navy Blue */
+  --color-accent: #b79b60;        /* Metallic Gold */
+  --color-accent-hover: #9c824c;  /* Darker Gold */
+  --color-charcoal: #1a2530;      /* Body Text / Charcoal Dark */
+  --color-muted: #5a6b7c;         /* Muted Blue-Gray */
+  --color-white: #ffffff;         
   
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  /* UI Theme Tokens (Dark Mode Dashboard) */
+  --color-bg-dark: #070e17;       /* Darkest Space Blue */
+  --color-card-bg: rgba(13, 27, 47, 0.65); /* Glassmorphism background */
+  --color-card-border: rgba(183, 155, 96, 0.25); /* Subtle Gold border */
+  --color-input-bg: rgba(7, 14, 23, 0.7);
+  --color-input-border: rgba(90, 107, 124, 0.3);
+  --color-input-focus: #b79b60;
+  --color-text-light: #f3f4f6;
+  --color-text-muted: #94a3b8;
+  
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-whatsapp: #25d366;
+  
+  /* Fonts */
+  --font-title: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  
+  /* Shadows & Radius */
+  --radius-lg: 12px;
+  --radius-md: 8px;
+  --radius-sm: 4px;
+  --shadow-glow: 0 0 15px rgba(183, 155, 96, 0.15);
+  --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* 2. Global Resets & Scrollbars */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--color-bg-dashboard);
-  color: var(--color-text-dark);
+  font-family: var(--font-body);
+  background: radial-gradient(circle at top right, #0d1b2f 0%, var(--color-bg-dark) 70%);
+  color: var(--color-text-light);
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   overflow-x: hidden;
+  line-height: 1.5;
 }
 
-/* App Header */
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(183, 155, 96, 0.3);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-bg-dark);
+  transition: var(--transition-fast);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* 3. Layout Structure */
 .app-header {
-  background-color: var(--color-primary);
-  color: #ffffff;
-  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 4px solid var(--color-gold);
-  box-shadow: var(--shadow-md);
-  z-index: 10;
+  padding: 16px 32px;
+  background: rgba(13, 27, 47, 0.85);
+  border-bottom: 2px solid var(--color-accent);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
 
 .app-brand {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 16px;
 }
 
 .app-logo {
   height: 48px;
   width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .app-title-block {
@@ -69,84 +113,144 @@ body {
 }
 
 .app-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-title);
   font-size: 20px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  color: var(--color-white);
+  line-height: 1.1;
 }
 
 .app-subtitle {
-  font-size: 10.5px;
-  color: #a7f3d0;
+  font-size: 12px;
   font-weight: 500;
+  color: var(--color-accent);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-top: 2px;
 }
 
 .app-status-badge {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1.5px solid var(--color-gold);
-  color: var(--color-gold-light);
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 10.5px;
+  font-family: var(--font-title);
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-accent);
+  background: rgba(183, 155, 96, 0.1);
+  color: var(--color-accent);
 }
 
-/* Main Layout */
+/* Main Container */
 .dashboard-container {
-  display: flex;
-  flex: 1;
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1680px;
+  margin: 0 auto;
   height: calc(100vh - 82px);
-  overflow: hidden;
+  min-height: 500px;
 }
 
-/* Form Panel Left */
+/* 4. Form Config Sidebar */
 .form-panel {
-  flex: 0 0 38%;
-  max-width: 38%;
-  padding: 25px 30px;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-premium);
+  backdrop-filter: blur(12px);
   overflow-y: auto;
-  background-color: #ffffff;
-  border-right: 1px solid var(--color-border-light);
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 20px;
+  height: 100%;
 }
 
-/* Custom Scrollbar for Form Panel */
-.form-panel::-webkit-scrollbar {
-  width: 6px;
-}
-.form-panel::-webkit-scrollbar-track {
-  background: transparent;
-}
-.form-panel::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
-  border-radius: 3px;
+/* Voice Assistant Card */
+.voice-assistant-card {
+  background: rgba(183, 155, 96, 0.06);
+  border: 1px dashed var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Form Sections */
-.form-section-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 15px;
-  font-weight: 800;
-  color: var(--color-primary);
-  text-transform: uppercase;
-  margin-bottom: 15px;
-  border-bottom: 2px solid var(--color-border-light);
-  padding-bottom: 6px;
-  letter-spacing: 0.5px;
+.voice-status {
   display: flex;
   align-items: center;
   gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.pulse-red {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-danger);
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(239, 68, 68, 0.4);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.voice-assistant-card textarea {
+  width: 100%;
+  background: rgba(7, 14, 23, 0.5);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light);
+  padding: 8px 12px;
+  font-size: 13px;
+  resize: vertical;
+  font-family: var(--font-body);
+}
+
+.voice-assistant-card textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+/* Sections of the Form */
+.form-section {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 20px;
+}
+.form-section:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.form-section-title {
+  font-family: var(--font-title);
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
 .form-group {
@@ -159,319 +263,893 @@ body {
   grid-column: span 2;
 }
 
-label {
+.form-group label {
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
   color: var(--color-text-muted);
-  letter-spacing: 0.3px;
 }
 
-input[type="text"],
-input[type="time"],
-input[type="date"],
-select,
-textarea {
-  font-family: 'Inter', sans-serif;
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light);
+  padding: 8px 12px;
+  font-family: var(--font-body);
   font-size: 13px;
-  padding: 10px 12px;
-  border: 1.5px solid var(--color-border-light);
-  border-radius: 6px;
-  color: var(--color-text-dark);
-  background-color: #f8fafc;
+  transition: var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
   outline: none;
-  transition: all 0.2s ease;
-  width: 100%;
+  border-color: var(--color-input-focus);
+  box-shadow: 0 0 0 3px rgba(183, 155, 96, 0.15);
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: var(--color-accent);
-  background-color: #ffffff;
-  box-shadow: 0 0 0 3px rgba(40, 138, 68, 0.15);
-}
-
-textarea {
+.form-group textarea {
   resize: vertical;
   min-height: 80px;
 }
 
-/* Voice area styling */
-.voice-assistant-card {
-  background-color: var(--color-primary-light);
-  border: 1.5px solid rgba(16, 80, 32, 0.15);
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.voice-status {
-  font-size: 11.5px;
-  font-weight: 700;
-  color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.pulse-red {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background-color: #ef4444;
-  border-radius: 50%;
-  animation: pulse 1.2s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-}
-
-/* Actions Section */
-.action-buttons-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-top: 10px;
-}
-
-.action-buttons-grid .btn:first-child,
-.action-buttons-grid .btn:nth-child(2) {
-  grid-column: span 1;
-}
-
-.action-buttons-grid .btn:nth-child(3),
-.action-buttons-grid .btn:nth-child(4) {
-  grid-column: span 1;
-}
-
-.action-buttons-grid .btn:last-child {
-  grid-column: span 2;
-}
-
-.btn {
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 14px 22px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  user-select: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.btn:active {
-  transform: translateY(0);
-}
-
-.btn-primary {
-  background-color: var(--color-primary);
-  color: #ffffff;
-}
-
-.btn-primary:hover {
-  background-color: var(--color-primary-dark);
-}
-
-.btn-accent {
-  background-color: var(--color-accent);
-  color: #ffffff;
-}
-
-.btn-accent:hover {
-  background-color: var(--color-primary);
-}
-
-.btn-secondary {
-  background-color: var(--color-text-muted);
-  color: #ffffff;
-}
-
-.btn-secondary:hover {
-  background-color: #475569;
-}
-
-.btn-gold {
-  background-color: var(--color-gold);
-  color: #ffffff;
-}
-
-.btn-gold:hover {
-  background-color: var(--color-gold-dark);
-}
-
-.btn-whatsapp {
-  background-color: #25d366;
-  color: #ffffff;
-}
-
-.btn-whatsapp:hover {
-  background-color: #20ba5a;
-}
-
-.btn-outline {
-  background-color: transparent;
-  border: 1.5px solid var(--color-border);
-  color: var(--color-text-muted);
-}
-
-.btn-outline:hover {
-  background-color: #f1f5f9;
-  color: var(--color-text-dark);
-  border-color: var(--color-text-muted);
-}
-
-.btn-danger {
-  background-color: #cbd5e1;
-  color: #475569;
-  border: 1.5px solid #cbd5e1;
-}
-
-.btn-danger:hover {
-  background-color: #b9c2ce;
-  color: var(--color-text-dark);
-}
-
-/* Preview Panel Right */
-.preview-panel {
-  flex: 1;
-  background-color: #e2e8f0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 30px;
-  overflow: auto;
-  position: relative;
-}
-
-/* Container for Preview */
-.preview-scale-wrapper {
-  width: 100%;
-  max-width: 950px;
-  display: flex;
-  justify-content: center;
-  background-color: transparent;
-  box-shadow: none;
-}
-
-/* Live Player List Editor */
+/* Player List Editors inside Sidebar */
 .player-list-editor {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.player-item-row {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.remove-btn {
-  background-color: #f1f5f9;
-  border: 1px solid var(--color-border);
-  color: #ef4444;
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.remove-btn:hover {
-  background-color: #fee2e2;
-  border-color: #fecaca;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .add-player-row {
   display: flex;
   gap: 8px;
-  margin-top: 5px;
 }
 
-/* Non Convocados Editor Row */
+.player-item-row,
 .noconv-item-row {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.03);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
-.noconv-item-row input[type="text"] {
-  flex: 2;
-}
-
+.player-item-row input,
+.noconv-item-row input,
 .noconv-item-row select {
-  flex: 1.5;
+  background: rgba(7, 14, 23, 0.8);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-light);
+  padding: 4px 8px;
+  font-size: 12px;
+  flex: 1;
 }
 
-/* Interactive list empty states */
+.remove-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  transition: var(--transition-fast);
+}
+
+.remove-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-danger);
+}
+
 .empty-list-placeholder {
   font-size: 12px;
   color: var(--color-text-muted);
-  font-style: italic;
-  padding: 10px;
-  background-color: #f8fafc;
-  border: 1.5px dashed var(--color-border);
-  border-radius: 6px;
   text-align: center;
+  font-style: italic;
+  padding: 10px 0;
 }
 
-/* Responsive Breakpoints */
-@media (max-width: 1200px) {
+/* 5. Buttons & Controls Grid */
+.action-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn {
+  font-family: var(--font-title);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-primary);
+}
+.btn-primary:hover {
+  background: var(--color-accent-hover);
+  box-shadow: 0 0 12px rgba(183, 155, 96, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.1);
+  color: var(--color-text-light);
+  border: 1px solid rgba(255,255,255,0.15);
+}
+.btn-secondary:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.btn-gold {
+  background: transparent;
+  color: var(--color-accent);
+  border: 1.5px solid var(--color-accent);
+}
+.btn-gold:hover {
+  background: rgba(183, 155, 96, 0.1);
+  box-shadow: var(--shadow-glow);
+}
+
+.btn-whatsapp {
+  background: var(--color-whatsapp);
+  color: var(--color-white);
+  grid-column: span 2; /* Stretch to fill full row */
+}
+.btn-whatsapp:hover {
+  background: #20ba5a;
+  box-shadow: 0 0 12px rgba(37, 211, 102, 0.3);
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: var(--color-white);
+}
+
+/* 6. Live Preview Panel (Right Side) */
+.preview-panel {
+  background: rgba(0,0,0,0.15);
+  border: 1px dashed rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+}
+
+.preview-scale-wrapper {
+  transition: transform 0.2s ease-out;
+}
+
+/* Folio Base Styling (Simulating A4 Page) */
+.folio-container {
+  width: 794px; /* Exact A4 aspect-ratio base width */
+  min-height: 1123px; /* A4 height at 96 DPI */
+  background-color: var(--color-white);
+  color: var(--color-charcoal);
+  padding: 40px 50px;
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.folio-top-stripe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(to right, var(--color-primary), #1a385f, var(--color-accent));
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+/* Folio Header & Branding */
+.folio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 15px;
+}
+
+.folio-logo-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.folio-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.folio-logo {
+  height: 65px;
+  width: auto;
+  object-fit: contain;
+}
+
+.folio-logo-placeholder {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 2px solid var(--color-accent);
+  color: var(--color-white);
+  font-family: var(--font-title);
+  font-size: 20px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.folio-club-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.folio-club-name {
+  font-family: var(--font-title);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+
+.folio-club-slogan {
+  font-size: 11px;
+  color: var(--color-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-top: 3px;
+}
+
+.folio-club-sub {
+  font-size: 10px;
+  color: var(--color-muted);
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.folio-doc-title-container {
+  text-align: right;
+}
+
+.folio-doc-title {
+  font-family: var(--font-title);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.folio-doc-subtitle {
+  font-size: 10px;
+  color: var(--color-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Double divider line based on brand guidelines */
+.folio-header-divider {
+  margin-top: 4px;
+  margin-bottom: 20px;
+  height: 4.5px;
+  border-top: 2.5px solid var(--color-primary);
+  border-bottom: 1.5px solid var(--color-accent);
+  box-sizing: border-box;
+}
+
+/* Document Title Card */
+.folio-main-title-block {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.folio-main-title {
+  font-family: var(--font-title);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.folio-main-subtitle {
+  font-size: 13px;
+  color: var(--color-accent);
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* Match Grid Sheet Card */
+.folio-match-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.folio-match-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px 16px;
+}
+
+.folio-match-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.folio-match-item.col-span-2 {
+  grid-column: span 2;
+}
+
+.folio-match-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 2px;
+}
+
+.folio-match-value {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-charcoal);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folio-badge-condicion {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.folio-badge-condicion.fuera,
+.folio-badge-condicion.visitante {
+  background-color: var(--color-accent);
+}
+
+/* Squad section */
+.folio-squad-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.folio-section-title {
+  font-family: var(--font-title);
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  border-bottom: 1.5px solid var(--color-primary);
+  padding-bottom: 4px;
+}
+
+.folio-player-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 16px;
+  align-content: start;
+}
+
+.folio-player-card {
+  background-color: var(--color-white);
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--color-primary);
+  border-radius: 6px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.folio-player-num {
+  font-family: var(--font-title);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-accent);
+  background-color: #f1f5f9;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.folio-player-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.folio-player-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-charcoal);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.folio-player-pos {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  background-color: #f1f5f9;
+  padding: 1.5px 5px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.folio-empty-placeholder {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  font-size: 13px;
+  color: var(--color-muted);
+  font-style: italic;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 6px;
+}
+
+/* Bottom Block elements */
+.folio-bottom-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto; /* Push to bottom */
+}
+
+.folio-obs-card {
+  background-color: #fdfaf4;
+  border: 1px solid #f2e6cf;
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+}
+
+.folio-obs-title {
+  font-family: var(--font-title);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-accent-hover);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.folio-obs-body {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #66502c;
+}
+
+.folio-no-conv-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+}
+
+.folio-no-conv-title {
+  font-family: var(--font-title);
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.folio-no-conv-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.folio-no-conv-row {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.folio-no-conv-badge {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  width: 105px;
+  text-align: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.folio-badge-dt { background-color: #e2e8f0; color: var(--color-charcoal); }
+.folio-badge-injury { background-color: #fee2e2; color: var(--color-danger); }
+.folio-badge-suspension { background-color: #fef3c7; color: #b45309; }
+
+.folio-no-conv-player {
+  font-weight: 700;
+  color: var(--color-charcoal);
+  width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.folio-no-conv-desc {
+  color: var(--color-muted);
+  font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Footer Section */
+.folio-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 12px;
+  margin-top: 15px;
+}
+
+.folio-footer-info {
+  font-size: 10px;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
+.folio-footer-motto {
+  font-family: var(--font-title);
+  font-weight: 800;
+  color: var(--color-accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+/* Signature & Stamp Realistic Positioning */
+.folio-signature-container {
+  width: 180px;
+  text-align: center;
+  position: relative;
+  height: 75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.signature-image-container {
+  position: absolute;
+  top: -20px;
+  left: 0px;
+  height: 60px;
+  width: 120px;
+  pointer-events: none;
+}
+
+.signature-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.stamp-container {
+  position: absolute;
+  top: -25px;
+  left: 90px;
+  width: 70px;
+  height: 70px;
+  pointer-events: none;
+  mix-blend-mode: multiply; /* Realistic stamp ink overlap */
+  opacity: 0.85;
+}
+
+.stamp-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.folio-signature-line {
+  border-top: 1.5px dashed var(--color-muted);
+  padding-top: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  position: relative;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   7. PDF / Export Specific Styling (Overrides to enforce single page A4)
+   ========================================================================== */
+.pdf-export.folio-container {
+  width: 794px !important;  /* 210mm at 96 DPI */
+  height: 1123px !important; /* 297mm at 96 DPI */
+  padding: 35px 45px !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  gap: 0 !important;
+  margin: 0 !important;
+}
+
+.pdf-export .folio-top-stripe {
+  border-radius: 0 !important;
+  height: 6px !important;
+}
+
+.pdf-export .folio-header {
+  padding-bottom: 10px !important;
+}
+
+.pdf-export .folio-header-divider {
+  margin-top: 3px !important;
+  margin-bottom: 12px !important;
+}
+
+.pdf-export .folio-main-title-block {
+  margin-bottom: 12px !important;
+}
+
+.pdf-export .folio-main-title {
+  font-size: 20px !important;
+}
+
+.pdf-export .folio-match-card {
+  padding: 10px 14px !important;
+  margin-bottom: 12px !important;
+  border-radius: 6px !important;
+}
+
+.pdf-export .folio-match-grid {
+  gap: 6px 12px !important;
+}
+
+.pdf-export .folio-match-label {
+  font-size: 8.5px !important;
+  margin-bottom: 1px !important;
+}
+
+.pdf-export .folio-match-value {
+  font-size: 11px !important;
+}
+
+.pdf-export .folio-badge-condicion {
+  font-size: 8.5px !important;
+  padding: 1px 5px !important;
+}
+
+.pdf-export .folio-squad-section {
+  margin-bottom: 12px !important;
+}
+
+.pdf-export .folio-section-title {
+  font-size: 13.5px !important;
+  margin-bottom: 8px !important;
+  padding-bottom: 2px !important;
+}
+
+.pdf-export .folio-player-grid {
+  gap: 6px 12px !important;
+}
+
+.pdf-export .folio-player-card {
+  height: 32px !important;
+  padding: 4px 10px !important;
+  gap: 8px !important;
+  border-radius: 4px !important;
+}
+
+.pdf-export .folio-player-num {
+  font-size: 9.5px !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.pdf-export .folio-player-name {
+  font-size: 10.5px !important;
+}
+
+.pdf-export .folio-player-pos {
+  font-size: 7.5px !important;
+  padding: 1px 4px !important;
+}
+
+.pdf-export .folio-obs-card {
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+}
+
+.pdf-export .folio-obs-title {
+  font-size: 9.5px !important;
+}
+
+.pdf-export .folio-obs-body {
+  font-size: 10px !important;
+}
+
+.pdf-export .folio-no-conv-card {
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+}
+
+.pdf-export .folio-no-conv-title {
+  font-size: 9.5px !important;
+  margin-bottom: 4px !important;
+}
+
+.pdf-export .folio-no-conv-grid {
+  gap: 4px !important;
+}
+
+.pdf-export .folio-no-conv-row {
+  font-size: 10px !important;
+}
+
+.pdf-export .folio-no-conv-badge {
+  font-size: 7.5px !important;
+  width: 80px !important;
+  margin-right: 10px !important;
+  padding: 1px 4px !important;
+}
+
+.pdf-export .folio-no-conv-player {
+  font-size: 10px !important;
+  width: 150px !important;
+  margin-right: 10px !important;
+}
+
+.pdf-export .folio-no-conv-desc {
+  font-size: 10px !important;
+}
+
+.pdf-export .folio-footer {
+  padding-top: 8px !important;
+  margin-top: 10px !important;
+}
+
+.pdf-export .folio-footer-motto {
+  font-size: 9.5px !important;
+}
+
+.pdf-export .folio-footer-info {
+  font-size: 8.5px !important;
+}
+
+.pdf-export .folio-signature-container {
+  height: 60px !important;
+  width: 140px !important;
+}
+
+.pdf-export .signature-image-container {
+  top: -15px !important;
+  height: 45px !important;
+  width: 90px !important;
+}
+
+.pdf-export .stamp-container {
+  top: -20px !important;
+  left: 70px !important;
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.pdf-export .folio-signature-line {
+  font-size: 8.5px !important;
+}
+
+/* ==========================================================================
+   8. Responsive Layout Mobile Styles
+   ========================================================================== */
+@media (max-width: 1024px) {
   .dashboard-container {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     height: auto;
-    overflow: visible;
+    overflow-y: visible;
   }
   
   .form-panel {
-    flex: none;
-    max-width: 100%;
-    width: 100%;
-    overflow-y: visible;
     height: auto;
+    max-height: 80vh;
   }
   
   .preview-panel {
     height: auto;
-    overflow: visible;
-    padding: 20px 10px;
+    min-height: 600px;
+    padding: 10px;
   }
 }
 
 @media (max-width: 600px) {
   .app-header {
-    padding: 10px 15px;
+    padding: 12px 16px;
     flex-direction: column;
-    gap: 8px;
-    text-align: center;
+    gap: 12px;
+    align-items: flex-start;
   }
   
-  .app-brand {
-    flex-direction: column;
-    gap: 5px;
+  .app-status-badge {
+    align-self: flex-end;
   }
   
   .form-grid {
@@ -486,1036 +1164,7 @@ textarea {
     grid-template-columns: 1fr;
   }
   
-  .action-buttons-grid .btn {
-    grid-column: span 1 !important;
-  }
-  
-  .preview-scale-wrapper {
-    width: 100%;
-  }
-
-  /* Mobile Preview Overrides for Screen view */
-  .preview-mode .folio-player-grid {
-    grid-template-columns: 1fr !important;
-  }
-
-  .preview-mode .folio-match-grid {
-    grid-template-columns: 1fr 1fr !important;
-  }
-
-  .preview-mode .folio-header {
-    flex-direction: column !important;
-    text-align: center !important;
-    gap: 12px !important;
-  }
-
-  .preview-mode .folio-logo-title {
-    flex-direction: column !important;
-    text-align: center !important;
-  }
-
-  .preview-mode .folio-doc-title-container {
-    text-align: center !important;
-    margin-top: 5px !important;
-  }
-
-  .preview-mode .folio-no-conv-row {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 6px !important;
-    border-bottom: 1px solid var(--color-border-light) !important;
-    padding-bottom: 8px !important;
-    margin-bottom: 8px !important;
-  }
-
-  .preview-mode .folio-no-conv-player {
-    width: 100% !important;
-    margin-right: 0 !important;
-  }
-
-  .preview-mode .folio-no-conv-desc {
-    width: 100% !important;
-    white-space: normal !important;
-  }
-
-  .preview-mode .folio-no-conv-badge {
-    width: auto !important;
-    align-self: flex-start !important;
-    margin-bottom: 2px !important;
-  }
-
-  .preview-mode .folio-footer {
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
-    gap: 15px !important;
-  }
-
-  .preview-mode .folio-signature-container {
-    margin: 10px auto 0 auto !important;
+  .btn-whatsapp {
+    grid-column: span 1;
   }
 }
-
-/* Folio styling for live preview and printing */
-.folio-container {
-  width: 100%;
-  max-width: 950px;
-  background-color: #ffffff;
-  padding: 40px 50px;
-  font-family: 'Inter', sans-serif;
-  color: #1F2933;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  position: relative;
-  box-shadow: var(--shadow-xl);
-  border-radius: 8px;
-  margin: 0 auto;
-  gap: 20px;
-}
-
-.folio-top-stripe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 6px;
-  background: linear-gradient(to right, #0B3D2E, #146B4D, #6BBF59, #C6A15B);
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-/* Header */
-.folio-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 20px;
-  border-bottom: 2px solid #C6A15B;
-  margin-bottom: 10px;
-}
-
-.folio-logo-title {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.folio-logo-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.folio-logo {
-  height: 75px;
-  width: auto;
-  object-fit: contain;
-}
-
-.folio-logo-placeholder {
-  width: 75px;
-  height: 75px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #0B3D2E, #146B4D);
-  border: 2px solid #C6A15B;
-  color: #ffffff;
-  font-family: 'Outfit', sans-serif;
-  font-size: 24px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.folio-club-title {
-  display: flex;
-  flex-direction: column;
-}
-
-.folio-club-name {
-  font-family: 'Outfit', sans-serif;
-  font-size: 28px;
-  font-weight: 800;
-  color: #0B3D2E;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  line-height: 1.1;
-}
-
-.folio-club-slogan {
-  font-size: 13px;
-  color: #146B4D;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-  margin-top: 4px;
-}
-
-.folio-club-sub {
-  font-size: 11px;
-  color: #64748b;
-  font-weight: 500;
-  margin-top: 2px;
-}
-
-.folio-doc-title-container {
-  text-align: right;
-}
-
-.folio-doc-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 20px;
-  font-weight: 800;
-  color: #C6A15B;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  display: block;
-}
-
-.folio-doc-subtitle {
-  font-size: 12px;
-  color: #64748b;
-  font-weight: 600;
-  margin-top: 2px;
-  text-transform: uppercase;
-}
-
-/* Main Title block */
-.folio-main-title-block {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.folio-main-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 34px;
-  font-weight: 900;
-  color: #0B3D2E;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin: 0;
-}
-
-.folio-main-subtitle {
-  font-size: 16px;
-  color: #146B4D;
-  font-weight: 700;
-  margin-top: 6px;
-}
-
-/* Match card */
-.folio-match-card {
-  background-color: #F4F6F5;
-  border: 1.5px solid #cbd5e1;
-  border-left: 6px solid #C6A15B;
-  border-radius: 8px;
-  padding: 20px 24px;
-  margin-bottom: 20px;
-}
-
-.folio-match-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px 20px;
-}
-
-.folio-match-item {
-  display: flex;
-  flex-direction: column;
-}
-
-.folio-match-item.col-span-2 {
-  grid-column: span 2;
-}
-
-.folio-match-label {
-  font-size: 11px;
-  font-weight: 800;
-  color: #146B4D;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 4px;
-}
-
-.folio-match-value {
-  font-size: 15px;
-  font-weight: 700;
-  color: #1F2933;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.folio-badge-condicion {
-  display: inline-block;
-  background-color: #0B3D2E;
-  color: #FFFFFF;
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  width: fit-content;
-}
-
-.folio-badge-condicion.fuera {
-  background-color: #C6A15B;
-}
-
-/* Content Area */
-.folio-squad-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-  min-height: 0;
-}
-
-.folio-section-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 22px;
-  font-weight: 800;
-  color: #0B3D2E;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  border-bottom: 2px solid #146B4D;
-  padding-bottom: 6px;
-  letter-spacing: 0.5px;
-}
-
-/* Player Grid */
-.folio-player-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px 16px;
-  align-content: start;
-  flex: 1;
-  min-height: 0;
-}
-
-.folio-player-card {
-  background-color: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-left: 4.5px solid #146B4D;
-  border-radius: 6px;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  height: 48px;
-  box-sizing: border-box;
-}
-
-.folio-player-num {
-  font-family: 'Outfit', sans-serif;
-  font-size: 14px;
-  font-weight: 800;
-  color: #C6A15B;
-  background-color: #F4F6F5;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.folio-player-details {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-  overflow: hidden;
-}
-
-.folio-player-name {
-  font-size: 15px;
-  font-weight: 700;
-  color: #1F2933;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.folio-player-pos {
-  font-size: 11px;
-  font-weight: 600;
-  color: #64748b;
-  text-transform: uppercase;
-  background-color: #f1f5f9;
-  padding: 2px 6px;
-  border-radius: 3px;
-  flex-shrink: 0;
-  margin-left: 5px;
-}
-
-.folio-empty-placeholder {
-  grid-column: span 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  font-size: 15px;
-  color: #64748b;
-  font-style: italic;
-  border: 1.5px dashed #cbd5e1;
-  border-radius: 6px;
-  padding: 20px;
-}
-
-/* Bottom Section */
-.folio-bottom-block {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-/* Observations */
-.folio-obs-card {
-  background-color: #fbf8f2;
-  border: 1.5px solid #e2e8f0;
-  border-left: 4.5px solid #C6A15B;
-  border-radius: 8px;
-  padding: 16px 20px;
-}
-
-.folio-obs-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  font-weight: 800;
-  color: #b5904a;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.folio-obs-body {
-  font-size: 15px;
-  line-height: 1.4;
-  color: #78350f;
-}
-
-/* Non Convocados */
-.folio-no-conv-card {
-  background-color: #F4F6F5;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 16px 20px;
-}
-
-.folio-no-conv-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  font-weight: 800;
-  color: #64748b;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-}
-
-.folio-no-conv-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.folio-no-conv-row {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-}
-
-.folio-no-conv-badge {
-  font-size: 11px;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  width: 120px;
-  text-align: center;
-  margin-right: 15px;
-  display: inline-block;
-  flex-shrink: 0;
-}
-
-.folio-badge-dt { background-color: #cbd5e1; color: #1F2933; }
-.folio-badge-injury { background-color: #fee2e2; color: #ef4444; }
-.folio-badge-suspension { background-color: #fef3c7; color: #b45309; }
-
-.folio-no-conv-player {
-  font-weight: 700;
-  color: #1F2933;
-  width: 220px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-right: 15px;
-  flex-shrink: 0;
-}
-
-.folio-no-conv-desc {
-  color: #64748b;
-  font-style: italic;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* Footer */
-.folio-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  border-top: 1.5px solid #e2e8f0;
-  padding-top: 15px;
-  margin-top: 10px;
-}
-
-.folio-footer-info {
-  font-size: 11px;
-  color: #64748b;
-  line-height: 1.4;
-}
-
-.folio-footer-motto {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 800;
-  color: #C6A15B;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.folio-signature-container {
-  text-align: center;
-  font-size: 11px;
-  color: #64748b;
-  width: 180px;
-}
-
-.folio-signature-line {
-  border-top: 1.5px dashed #64748b;
-  margin-top: 25px;
-  padding-top: 4px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-/* ==========================================
-   PDF/Print Mode Specific Overrides (Exact A4)
-   ========================================== */
-.pdf-mode.folio-container {
-  width: 210mm !important;
-  height: 297mm !important;
-  padding: 12mm 15mm !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  margin: 0 !important;
-  justify-content: space-between !important;
-  gap: 0 !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-}
-
-.pdf-mode .folio-top-stripe {
-  border-radius: 0 !important;
-  height: 6px !important;
-}
-
-.pdf-mode .folio-header {
-  padding-bottom: 12px !important;
-  border-bottom: 2px solid #C6A15B !important;
-  margin-bottom: 12px !important;
-}
-
-.pdf-mode .folio-logo {
-  height: 55px !important;
-}
-
-.pdf-mode .folio-logo-placeholder {
-  width: 55px !important;
-  height: 55px !important;
-  font-size: 18px !important;
-}
-
-.pdf-mode .folio-club-name {
-  font-size: 24px !important;
-  line-height: 1.1 !important;
-}
-
-.pdf-mode .folio-club-slogan {
-  font-size: 11px !important;
-  margin-top: 2px !important;
-}
-
-.pdf-mode .folio-club-sub {
-  font-size: 9px !important;
-  margin-top: 1px !important;
-}
-
-.pdf-mode .folio-doc-title {
-  font-size: 16px !important;
-}
-
-.pdf-mode .folio-doc-subtitle {
-  font-size: 10px !important;
-  margin-top: 2px !important;
-}
-
-.pdf-mode .folio-main-title-block {
-  margin-bottom: 12px !important;
-}
-
-.pdf-mode .folio-main-title {
-  font-size: 20px !important;
-}
-
-.pdf-mode .folio-main-subtitle {
-  font-size: 12px !important;
-  margin-top: 4px !important;
-}
-
-.pdf-mode .folio-match-card {
-  padding: 10px 14px !important;
-  margin-bottom: 12px !important;
-  border-radius: 6px !important;
-  border-width: 1px !important;
-  border-left-width: 4px !important;
-}
-
-.pdf-mode .folio-match-grid {
-  gap: 8px 12px !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-}
-
-.pdf-mode .folio-match-label {
-  font-size: 8px !important;
-  margin-bottom: 2px !important;
-}
-
-.pdf-mode .folio-match-value {
-  font-size: 11px !important;
-}
-
-.pdf-mode .folio-badge-condicion {
-  font-size: 8px !important;
-  padding: 1px 6px !important;
-}
-
-.pdf-mode .folio-squad-section {
-  margin-bottom: 12px !important;
-}
-
-.pdf-mode .folio-section-title {
-  font-size: 13px !important;
-  margin-bottom: 8px !important;
-  padding-bottom: 3px !important;
-}
-
-.pdf-mode .folio-player-grid {
-  gap: 6px 12px !important;
-  grid-template-columns: repeat(2, 1fr) !important;
-}
-
-.pdf-mode .folio-player-card {
-  height: 34px !important;
-  padding: 5px 10px !important;
-  gap: 10px !important;
-  border-radius: 4px !important;
-  border-width: 1px !important;
-  border-left-width: 3.5px !important;
-}
-
-.pdf-mode .folio-player-num {
-  font-size: 11px !important;
-  width: 20px !important;
-  height: 20px !important;
-}
-
-.pdf-mode .folio-player-name {
-  font-size: 10.5px !important;
-}
-
-.pdf-mode .folio-player-pos {
-  font-size: 8px !important;
-}
-
-.pdf-mode .folio-obs-card {
-  padding: 8px 12px !important;
-  border-radius: 6px !important;
-  border-width: 1px !important;
-  border-left-width: 3.5px !important;
-}
-
-.pdf-mode .folio-obs-title {
-  font-size: 10px !important;
-  margin-bottom: 2px !important;
-}
-
-.pdf-mode .folio-obs-body {
-  font-size: 9.5px !important;
-  line-height: 1.3 !important;
-}
-
-.pdf-mode .folio-no-conv-card {
-  padding: 8px 12px !important;
-  border-radius: 6px !important;
-  border-width: 1px !important;
-}
-
-.pdf-mode .folio-no-conv-title {
-  font-size: 10px !important;
-  margin-bottom: 4px !important;
-}
-
-.pdf-mode .folio-no-conv-grid {
-  gap: 4px !important;
-}
-
-.pdf-mode .folio-no-conv-row {
-  font-size: 9.5px !important;
-  flex-direction: row !important;
-  align-items: center !important;
-  border-bottom: none !important;
-  padding-bottom: 0 !important;
-  margin-bottom: 0 !important;
-}
-
-.pdf-mode .folio-no-conv-badge {
-  font-size: 7.5px !important;
-  width: 90px !important;
-  margin-right: 10px !important;
-  padding: 1px 5px !important;
-  border-radius: 3px !important;
-}
-
-.pdf-mode .folio-no-conv-player {
-  font-size: 9.5px !important;
-  width: 170px !important;
-  margin-right: 10px !important;
-}
-
-.pdf-mode .folio-no-conv-desc {
-  font-size: 9.5px !important;
-  width: auto !important;
-  white-space: nowrap !important;
-}
-
-.pdf-mode .folio-footer {
-  padding-top: 6px !important;
-  margin-top: 5px !important;
-}
-
-.pdf-mode .folio-footer-motto {
-  font-size: 9px !important;
-}
-
-.pdf-mode .folio-footer-info {
-  font-size: 8px !important;
-}
-
-.pdf-mode .folio-signature-container {
-  width: 140px !important;
-  font-size: 8px !important;
-}
-
-.pdf-mode .folio-signature-line {
-  margin-top: 15px !important;
-  padding-top: 2px !important;
-  font-size: 8px !important;
-}
-
-/* ==========================================
-   New Isolated PDF Export Class (.pdf-export)
-   ========================================== */
-.pdf-export {
-  width: 210mm !important;
-  min-height: auto !important;
-  height: auto !important;
-  padding: 12mm !important;
-  margin: 0 !important;
-  background: white !important;
-  box-sizing: border-box !important;
-  overflow: visible !important;
-  transform: none !important;
-  zoom: 1 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 12px !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
-
-.pdf-export #folio-preview-container {
-  height: auto !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: inherit !important;
-}
-
-.pdf-export * {
-  box-sizing: border-box !important;
-  overflow: visible !important;
-}
-
-.pdf-export .folio-top-stripe {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 6px !important;
-  border-radius: 0 !important;
-}
-
-.pdf-export .folio-header {
-  padding-bottom: 12px !important;
-  border-bottom: 2px solid #C6A15B !important;
-  margin-bottom: 10px !important;
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-}
-
-.pdf-export .folio-logo {
-  height: 55px !important;
-  width: auto !important;
-}
-
-.pdf-export .folio-club-name {
-  font-size: 24px !important;
-  line-height: 1.1 !important;
-}
-
-.pdf-export .folio-club-slogan {
-  font-size: 11px !important;
-  margin-top: 2px !important;
-}
-
-.pdf-export .folio-club-sub {
-  font-size: 9px !important;
-  margin-top: 1px !important;
-}
-
-.pdf-export .folio-doc-title {
-  font-size: 16px !important;
-}
-
-.pdf-export .folio-doc-subtitle {
-  font-size: 10px !important;
-  margin-top: 2px !important;
-}
-
-.pdf-export .folio-main-title-block {
-  margin-bottom: 10px !important;
-  text-align: center !important;
-}
-
-.pdf-export .folio-main-title {
-  font-size: 20px !important;
-  margin: 0 !important;
-}
-
-.pdf-export .folio-main-subtitle {
-  font-size: 12px !important;
-  margin-top: 4px !important;
-}
-
-.pdf-export .folio-match-card {
-  padding: 10px 14px !important;
-  margin-bottom: 10px !important;
-  border-radius: 6px !important;
-  border-width: 1px !important;
-  border-left-width: 4px !important;
-  border-style: solid !important;
-  border-color: #cbd5e1 !important;
-  border-left-color: #C6A15B !important;
-  background-color: #F4F6F5 !important;
-}
-
-.pdf-export .folio-match-grid {
-  display: grid !important;
-  gap: 8px 12px !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-}
-
-.pdf-export .folio-match-label {
-  font-size: 8px !important;
-  margin-bottom: 2px !important;
-}
-
-.pdf-export .folio-match-value {
-  font-size: 11px !important;
-}
-
-.pdf-export .folio-badge-condicion {
-  font-size: 8px !important;
-  padding: 1px 6px !important;
-}
-
-.pdf-export .folio-squad-section {
-  margin-bottom: 10px !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-.pdf-export .folio-section-title {
-  font-size: 13px !important;
-  margin-bottom: 8px !important;
-  padding-bottom: 3px !important;
-  border-bottom: 2px solid #146B4D !important;
-}
-
-.pdf-export .folio-player-grid {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 6px 12px !important;
-}
-
-.pdf-export .folio-player-card {
-  height: 34px !important;
-  padding: 5px 10px !important;
-  gap: 10px !important;
-  border-radius: 4px !important;
-  border-width: 1px !important;
-  border-left-width: 3.5px !important;
-  border-style: solid !important;
-  border-color: #e2e8f0 !important;
-  border-left-color: #146B4D !important;
-  display: flex !important;
-  align-items: center !important;
-  box-sizing: border-box !important;
-}
-
-.pdf-export .folio-player-num {
-  font-size: 11px !important;
-  width: 20px !important;
-  height: 20px !important;
-  border-radius: 50% !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.pdf-export .folio-player-name {
-  font-size: 10.5px !important;
-}
-
-.pdf-export .folio-player-pos {
-  font-size: 8px !important;
-}
-
-.pdf-export .folio-bottom-block {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 10px !important;
-}
-
-.pdf-export .folio-obs-card {
-  padding: 8px 12px !important;
-  border-radius: 6px !important;
-  border-width: 1px !important;
-  border-left-width: 3.5px !important;
-  border-style: solid !important;
-  border-color: #e2e8f0 !important;
-  border-left-color: #C6A15B !important;
-  background-color: #fbf8f2 !important;
-}
-
-.pdf-export .folio-obs-title {
-  font-size: 10px !important;
-  margin-bottom: 2px !important;
-}
-
-.pdf-export .folio-obs-body {
-  font-size: 9.5px !important;
-  line-height: 1.3 !important;
-}
-
-.pdf-export .folio-no-conv-card {
-  padding: 8px 12px !important;
-  border-radius: 6px !important;
-  border-width: 1px !important;
-  border-style: solid !important;
-  border-color: #cbd5e1 !important;
-  background-color: #F4F6F5 !important;
-}
-
-.pdf-export .folio-no-conv-title {
-  font-size: 10px !important;
-  margin-bottom: 4px !important;
-}
-
-.pdf-export .folio-no-conv-grid {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 4px !important;
-}
-
-.pdf-export .folio-no-conv-row {
-  font-size: 9.5px !important;
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: center !important;
-}
-
-.pdf-export .folio-no-conv-badge {
-  font-size: 7.5px !important;
-  width: 90px !important;
-  margin-right: 10px !important;
-  padding: 1px 5px !important;
-  border-radius: 3px !important;
-}
-
-.pdf-export .folio-no-conv-player {
-  font-size: 9.5px !important;
-  width: 170px !important;
-  margin-right: 10px !important;
-}
-
-.pdf-export .folio-no-conv-desc {
-  font-size: 9.5px !important;
-  width: auto !important;
-  white-space: nowrap !important;
-}
-
-.pdf-export .folio-footer {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: flex-end !important;
-  border-top: 1.5px solid #e2e8f0 !important;
-  padding-top: 6px !important;
-  margin-top: 5px !important;
-}
-
-.pdf-export .folio-footer-motto {
-  font-size: 9px !important;
-}
-
-.pdf-export .folio-footer-info {
-  font-size: 8px !important;
-}
-
-.pdf-export .folio-signature-container {
-  width: 140px !important;
-  font-size: 8px !important;
-}
-
-.pdf-export .folio-signature-line {
-  margin-top: 15px !important;
-  padding-top: 2px !important;
-  font-size: 8px !important;
-}
-
-/* Page Break Avoidance rules */
-.pdf-export .folio-player-card,
-.pdf-export .folio-match-card,
-.pdf-export .folio-obs-card,
-.pdf-export .folio-no-conv-card,
-.pdf-export .folio-header,
-.pdf-export .folio-main-title-block,
-.pdf-export .folio-footer {
-  break-inside: avoid !important;
-  page-break-inside: avoid !important;
-}
-

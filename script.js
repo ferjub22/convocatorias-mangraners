@@ -1,109 +1,112 @@
-// Default template as a fallback if plantilla_folio.html is blocked by CORS
+/* ==========================================================================
+   CD Mangraners - Planificador de Convocatorias
+   Main Interactive Controller (From Scratch)
+   ========================================================================== */
+
+// 1. Setup Fallback HTML Template (matches plantilla_folio.html structure)
 const fallbackTemplate = `
-<div class="folio-top-stripe"></div>
-
-<!-- Header -->
-<div class="folio-header">
-  <div class="folio-logo-title">
-    <div class="folio-logo-container">
-      <img class="folio-logo" src="logo_club.png" alt="CD Mangraners Escudo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="folio-logo-placeholder" style="display: none;">CDM</div>
+  <div class="folio-top-stripe"></div>
+  <div class="folio-header">
+    <div class="folio-logo-title">
+      <div class="folio-logo-container">
+        <img class="folio-logo" src="logo_club.jpg" alt="CD Mangraners Escudo" onerror="this.src='logo_club.png';">
+      </div>
+      <div class="folio-club-title">
+        <span class="folio-club-name">MAGRANERS, C.D. A</span>
+        <span class="folio-club-slogan">Campions dins i fora del camp</span>
+        <span class="folio-club-sub">Som un projecte de formació, competició i valors</span>
+      </div>
     </div>
-    <div class="folio-club-title">
-      <span class="folio-club-name">MAGRANERS, C.D. A</span>
-      <span class="folio-club-slogan">Campions dins i fora del camp</span>
-      <span class="folio-club-sub">Som un projecte de formació, competició i valors</span>
-    </div>
-  </div>
-  <div class="folio-doc-title-container">
-    <span class="folio-doc-title">Convocatoria</span>
-    <span class="folio-doc-subtitle">Oficial</span>
-  </div>
-</div>
-
-<!-- Centered main title -->
-<div class="folio-main-title-block">
-  <h2 class="folio-main-title">CONVOCATORIA OFICIAL</h2>
-  <div class="folio-main-subtitle">Jornada {{Jornada}} — {{Equipo}}</div>
-</div>
-
-<!-- Match Card Details Block -->
-<div class="folio-match-card">
-  <div class="folio-match-grid">
-    <div class="folio-match-item col-span-2">
-      <span class="folio-match-label">Rival</span>
-      <span class="folio-match-value">{{Rival}}</span>
-    </div>
-    <div class="folio-match-item">
-      <span class="folio-match-label">Día del Partido</span>
-      <span class="folio-match-value">{{FechaHoraSplitDia}}</span>
-    </div>
-    <div class="folio-match-item">
-      <span class="folio-match-label">Hora Partido</span>
-      <span class="folio-match-value">{{FechaHoraSplitHora}}</span>
-    </div>
-    <div class="folio-match-item col-span-2">
-      <span class="folio-match-label">Campo / Instalación</span>
-      <span class="folio-match-value">{{Campo}}</span>
-    </div>
-    <div class="folio-match-item">
-      <span class="folio-match-label">Hora Llegada</span>
-      <span class="folio-match-value">{{HoraLlegada}}</span>
-    </div>
-    <div class="folio-match-item">
-      <span class="folio-match-label">Condición</span>
-      <span class="folio-badge-condicion {{CondicionClass}}">{{Condicion}}</span>
-    </div>
-    <div class="folio-match-item col-span-2">
-      <span class="folio-match-label">Equipación Oficial</span>
-      <span class="folio-match-value">{{Equipacion}}</span>
-    </div>
-    <div class="folio-match-item col-span-2">
-      <span class="folio-match-label">Cuerpo Técnico</span>
-      <span class="folio-match-value">{{CuerpoTecnico}}</span>
+    <div class="folio-doc-title-container">
+      <span class="folio-doc-title">Convocatoria</span>
+      <span class="folio-doc-subtitle">Oficial</span>
     </div>
   </div>
-</div>
+  
+  <div class="folio-header-divider"></div>
 
-<!-- Squad Convocados -->
-<div class="folio-squad-section">
-  <div class="folio-section-title">Jugadores Convocados</div>
-  <div class="folio-player-grid">
-    {{ConvocadosRows}}
-  </div>
-</div>
-
-<!-- Bottom Block (Observations & No Convocados) -->
-<div class="folio-bottom-block">
-  <!-- Observations -->
-  <div class="folio-obs-card" id="folio-obs-container" style="{{ShowObservations}}">
-    <div class="folio-obs-title">Observaciones de Convocatoria</div>
-    <div class="folio-obs-body">{{Observaciones}}</div>
+  <div class="folio-main-title-block">
+    <h2 class="folio-main-title">CONVOCATORIA OFICIAL</h2>
+    <div class="folio-main-subtitle">Jornada {{Jornada}} — {{Equipo}}</div>
   </div>
 
-  <!-- Non convocados -->
-  <div class="folio-no-conv-card" id="folio-noconv-container" style="{{ShowNoConvocados}}">
-    <div class="folio-no-conv-title">Situación de Plantilla (No Convocados)</div>
-    <div class="folio-no-conv-grid">
-      {{NoConvocadosRows}}
+  <div class="folio-match-card">
+    <div class="folio-match-grid">
+      <div class="folio-match-item col-span-2">
+        <span class="folio-match-label">Rival</span>
+        <span class="folio-match-value">{{Rival}}</span>
+      </div>
+      <div class="folio-match-item">
+        <span class="folio-match-label">Día del Partido</span>
+        <span class="folio-match-value">{{FechaHoraSplitDia}}</span>
+      </div>
+      <div class="folio-match-item">
+        <span class="folio-match-label">Hora Partido</span>
+        <span class="folio-match-value">{{FechaHoraSplitHora}}</span>
+      </div>
+      <div class="folio-match-item col-span-2">
+        <span class="folio-match-label">Campo / Instalación</span>
+        <span class="folio-match-value">{{Campo}}</span>
+      </div>
+      <div class="folio-match-item">
+        <span class="folio-match-label">Hora Llegada</span>
+        <span class="folio-match-value">{{HoraLlegada}}</span>
+      </div>
+      <div class="folio-match-item">
+        <span class="folio-match-label">Condición</span>
+        <span class="folio-badge-condicion {{CondicionClass}}">{{Condicion}}</span>
+      </div>
+      <div class="folio-match-item col-span-2">
+        <span class="folio-match-label">Equipación Oficial</span>
+        <span class="folio-match-value">{{Equipacion}}</span>
+      </div>
+      <div class="folio-match-item col-span-2">
+        <span class="folio-match-label">Cuerpo Técnico</span>
+        <span class="folio-match-value">{{CuerpoTecnico}}</span>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Footer -->
-<div class="folio-footer">
-  <div class="folio-footer-info">
-    <div class="folio-footer-motto">Som un projecte de formació, competició i valors</div>
-    <div>CD Mangraners — Coordinación Deportiva</div>
-    <div style="font-size: 7px; color: #94a3b8; margin-top: 1px;">Documento generado automáticamente para uso interno del club</div>
+  <div class="folio-squad-section">
+    <div class="folio-section-title">Jugadores Convocados</div>
+    <div class="folio-player-grid">
+      {{ConvocadosRows}}
+    </div>
   </div>
-  <div class="folio-signature-container">
-    <div class="folio-signature-line" id="folio-signature-label">{{FirmaResponsable}}</div>
+
+  <div class="folio-bottom-block">
+    <div class="folio-obs-card" id="folio-obs-container" style="{{ShowObservations}}">
+      <div class="folio-obs-title">Observaciones de Convocatoria</div>
+      <div class="folio-obs-body">{{Observaciones}}</div>
+    </div>
+
+    <div class="folio-no-conv-card" id="folio-noconv-container" style="{{ShowNoConvocados}}">
+      <div class="folio-no-conv-title">Situación de Plantilla (No Convocados)</div>
+      <div class="folio-no-conv-grid">
+        {{NoConvocadosRows}}
+      </div>
+    </div>
   </div>
-</div>
+
+  <div class="folio-footer">
+    <div class="folio-footer-info">
+      <div class="folio-footer-motto">Som un projecte de formació, competició i valors</div>
+      <div>CD Mangraners — Coordinación Deportiva</div>
+      <div style="font-size: 7px; color: #94a3b8; margin-top: 1px;">Documento generado automáticamente para uso interno del club</div>
+    </div>
+    <div class="folio-signature-container">
+      <div class="signature-image-container">
+        <img src="firma_autorizada.jpg" alt="Firma Autorizada">
+      </div>
+      <div class="stamp-container">
+        <img src="logo_club.jpg" alt="Sello Club">
+      </div>
+      <div class="folio-signature-line" id="folio-signature-label">{{FirmaResponsable}}</div>
+    </div>
+  </div>
 `;
 
-// Staff Directory (name -> formatted phone, clean digits)
+// Staff Directory (matching official coordinators and coaches)
 const staffDirectory = {
   "Federico Ferreira": { formatted: "600 000 004", digits: "600000004" },
   "Joel Benitez": { formatted: "600 000 001", digits: "600000001" },
@@ -115,58 +118,41 @@ const staffDirectory = {
   "Buena Ferreira": { formatted: "600 000 007", digits: "600000007" }
 };
 
-// Player lists in memory
+// Global Roster Lists
 let convocadosList = [];
 let noConvocadosList = [];
 let templateHtml = "";
 
+// 2. Application Entrypoint
 document.addEventListener("DOMContentLoaded", () => {
-  // Load template
-  loadTemplate();
-
-  // Setup Live Listeners
-  setupFormListeners();
-
-  // Setup Interactive Player Editors
-  setupPlayerEditors();
-
-  // Setup Voice Assistant
-  setupVoiceSpeech();
-
-  // Setup Buttons
-  document.getElementById("btn-load-demo").addEventListener("click", loadDemoData);
-  document.getElementById("btn-clear").addEventListener("click", clearForm);
-  document.getElementById("btn-download-pdf").addEventListener("click", downloadPDF);
-  document.getElementById("btn-send-whatsapp").addEventListener("click", sendWhatsApp);
-  document.getElementById("btn-generate").addEventListener("click", () => {
-    const equipoVal = document.getElementById("inp-equipo").value;
-    if (equipoVal) {
-      const isBenjOrAlev = equipoVal.toLowerCase().includes("benjam") || equipoVal.toLowerCase().includes("alev");
-      const limit = isBenjOrAlev ? 15 : 18;
-      if (convocadosList.length > limit) {
-        alert(`Atención: Has convocado a ${convocadosList.length} jugadores, pero el máximo para la categoría de ${equipoVal} es ${limit}. Por favor, reduce la convocatoria.`);
-        return;
-      }
-    }
-    updateLivePreview();
-  });
-
-  // Watch scale preview
-  window.addEventListener("resize", scalePreviewSheet);
+  // Load templates and initial state
+  loadTemplateAsync();
+  setupDynamicFormMappings();
+  setupInteractiveListControls();
+  setupSpeechRecognitionAssistant();
+  
+  // Register Actions
+  document.getElementById("btn-generate").addEventListener("click", forceLiveRefresh);
+  document.getElementById("btn-load-demo").addEventListener("click", loadDemoMatchday);
+  document.getElementById("btn-download-pdf").addEventListener("click", downloadAsSinglePagePDF);
+  document.getElementById("btn-clear").addEventListener("click", resetAllInputs);
+  document.getElementById("btn-send-whatsapp").addEventListener("click", shareSquadCallWhatsApp);
+  
+  // Window Resizing Handlers
+  window.addEventListener("resize", scaleLivePreviewPanel);
 });
 
-// Load Template File or Fallback
-async function loadTemplate() {
+// 3. Load plantillas dynamically
+async function loadTemplateAsync() {
   try {
     const res = await fetch("plantilla_folio.html");
     if (res.ok) {
       const text = await res.text();
-      // Extract the body content of the template
       const parser = new DOMParser();
       const doc = parser.parseFromString(text, "text/html");
-      const wrapper = doc.getElementById("folio-preview-card");
-      if (wrapper) {
-        templateHtml = wrapper.innerHTML;
+      const card = doc.getElementById("folio-preview-card");
+      if (card) {
+        templateHtml = card.innerHTML;
         console.log("Loaded template from plantilla_folio.html successfully.");
       } else {
         templateHtml = fallbackTemplate;
@@ -175,32 +161,20 @@ async function loadTemplate() {
       templateHtml = fallbackTemplate;
     }
   } catch (e) {
-    console.warn("CORS block or network error while fetching plantilla_folio.html. Falling back to local template string.", e);
+    console.warn("CORS block or fetch error. Falling back to local template.", e);
     templateHtml = fallbackTemplate;
   }
   updateLivePreview();
 }
 
-// Setup Form Listeners for Instant Live Update
-function setupFormListeners() {
-  const fields = [
-    "inp-jornada", "inp-equipo", "inp-categoria", "inp-rival",
-    "inp-dia", "inp-hora", "inp-llegada", "inp-campo",
-    "inp-condicion", "inp-equipacion", "inp-cuerpo", "inp-obs"
-  ];
-  fields.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener("input", updateLivePreview);
-      el.addEventListener("change", updateLivePreview);
-    }
-  });
-
-  // Link Equipo and Categoria select fields
-  const equipoSelect = document.getElementById("inp-equipo");
-  const categoriaSelect = document.getElementById("inp-categoria");
-
-  const teamToCat = {
+// 4. Form Mappings & Auto-populations
+function setupDynamicFormMappings() {
+  const teamSelect = document.getElementById("inp-equipo");
+  const catSelect = document.getElementById("inp-categoria");
+  const jornadaSelect = document.getElementById("inp-jornada");
+  const horaInput = document.getElementById("inp-hora");
+  
+  const teamToCatMap = {
     "Benjamí S10": "PRIMERA DIVISIÓ BENJAMÍ S10 (GRUP 13)",
     "Aleví S11": "SEGONA DIVISIÓ ALEVÍ S11 (GRUP 18)",
     "Aleví S12": "SEGONA DIVISIÓ ALEVÍ S12 (GRUP 22)",
@@ -210,17 +184,12 @@ function setupFormListeners() {
     "Quarta Catalana": "QUARTA CATALANA (GRUP 29)"
   };
 
-  const catToTeam = {
-    "PRIMERA DIVISIÓ BENJAMÍ S10 (GRUP 13)": "Benjamí S10",
-    "SEGONA DIVISIÓ ALEVÍ S11 (GRUP 18)": "Aleví S11",
-    "SEGONA DIVISIÓ ALEVÍ S12 (GRUP 22)": "Aleví S12",
-    "INFANTIL SEGONA DIVISIÓ S14 (GRUP 28)": "Infantil S14",
-    "Cadet Segona Divisió S16 - Grup 24": "Cadet S16",
-    "JUVENIL SEGONA DIVISIÓ (GRUP 46)": "Juvenil",
-    "QUARTA CATALANA (GRUP 29)": "Quarta Catalana"
-  };
+  const catToTeamMap = {};
+  for (let key in teamToCatMap) {
+    catToTeamMap[teamToCatMap[key]] = key;
+  }
 
-  const teamToStaff = {
+  const teamToStaffMap = {
     "Benjamí S10": "Felipe Filartiga y Joel Benitez",
     "Aleví S11": "Felipe Filartiga y Joel Benitez",
     "Aleví S12": "Joel Benitez",
@@ -230,301 +199,378 @@ function setupFormListeners() {
     "Quarta Catalana": "Aureliano Torres y Buena Ferreira"
   };
 
-  if (equipoSelect && categoriaSelect) {
-    let lastTeam = equipoSelect.value;
-    let lastCat = categoriaSelect.value;
+  // Sync Team -> Category and Staff
+  if (teamSelect && catSelect) {
+    let lastTeam = teamSelect.value;
+    let lastCat = catSelect.value;
 
-    equipoSelect.addEventListener("change", () => {
-      const selectedTeam = equipoSelect.value;
+    teamSelect.addEventListener("change", () => {
+      const team = teamSelect.value;
       if (convocadosList.length > 0 || noConvocadosList.length > 0) {
         if (!confirm("Cambiar de equipo borrará la lista de jugadores seleccionados. ¿Deseas continuar?")) {
-          equipoSelect.value = lastTeam;
+          teamSelect.value = lastTeam;
           return;
         }
       }
-      lastTeam = selectedTeam;
-      if (teamToCat[selectedTeam]) {
-        categoriaSelect.value = teamToCat[selectedTeam];
-        lastCat = teamToCat[selectedTeam];
-        if (teamToStaff[selectedTeam]) {
-          document.getElementById("inp-cuerpo").value = teamToStaff[selectedTeam];
-        }
-        // Clear lists when switching category
-        convocadosList = [];
-        noConvocadosList = [];
-        renderConvocadosEditor();
-        renderNoConvocadosEditor();
-        
-        autoPopulateMatchDetails();
-        updateLivePreview();
+      lastTeam = team;
+      
+      if (teamToCatMap[team]) {
+        catSelect.value = teamToCatMap[team];
+        lastCat = teamToCatMap[team];
       }
+      
+      if (teamToStaffMap[team]) {
+        document.getElementById("inp-cuerpo").value = teamToStaffMap[team];
+      }
+
+      // Reset roster lists
+      convocadosList = [];
+      noConvocadosList = [];
+      renderConvocadosList();
+      renderNoConvocadosList();
+      
+      // Load team specific dropdown options
+      updateJornadaDropdownOptions(team);
+      autoPopulateMatchDetails();
+      updateLivePreview();
     });
 
-    categoriaSelect.addEventListener("change", () => {
-      const selectedCat = categoriaSelect.value;
+    // Sync Category -> Team and Staff
+    catSelect.addEventListener("change", () => {
+      const cat = catSelect.value;
       if (convocadosList.length > 0 || noConvocadosList.length > 0) {
         if (!confirm("Cambiar de equipo borrará la lista de jugadores seleccionados. ¿Deseas continuar?")) {
-          categoriaSelect.value = lastCat;
+          catSelect.value = lastCat;
           return;
         }
       }
-      lastCat = selectedCat;
-      if (catToTeam[selectedCat]) {
-        const team = catToTeam[selectedCat];
-        equipoSelect.value = team;
+      lastCat = cat;
+
+      if (catToTeamMap[cat]) {
+        const team = catToTeamMap[cat];
+        teamSelect.value = team;
         lastTeam = team;
-        if (teamToStaff[team]) {
-          document.getElementById("inp-cuerpo").value = teamToStaff[team];
+        
+        if (teamToStaffMap[team]) {
+          document.getElementById("inp-cuerpo").value = teamToStaffMap[team];
         }
-        // Clear lists when switching category
+
+        // Reset lists
         convocadosList = [];
         noConvocadosList = [];
-        renderConvocadosEditor();
-        renderNoConvocadosEditor();
+        renderConvocadosList();
+        renderNoConvocadosList();
         
+        updateJornadaDropdownOptions(team);
         autoPopulateMatchDetails();
         updateLivePreview();
       }
     });
   }
 
-  const jornadaSelect = document.getElementById("inp-jornada");
   if (jornadaSelect) {
     jornadaSelect.addEventListener("change", () => {
       autoPopulateMatchDetails();
     });
   }
 
-  const horaInput = document.getElementById("inp-hora");
   if (horaInput) {
-    const handleHoraChange = () => {
+    const triggerArrivalCalc = () => {
       autoCalculateArrivalTime(horaInput.value);
     };
-    horaInput.addEventListener("input", handleHoraChange);
-    horaInput.addEventListener("change", handleHoraChange);
+    horaInput.addEventListener("input", triggerArrivalCalc);
+    horaInput.addEventListener("change", triggerArrivalCalc);
+  }
+
+  // Register Live Input Event Triggers for all inputs
+  const inputsToWatch = [
+    "inp-rival", "inp-dia", "inp-hora", "inp-llegada", "inp-campo",
+    "inp-condicion", "inp-equipacion", "inp-cuerpo", "inp-obs"
+  ];
+  inputsToWatch.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener("input", updateLivePreview);
+      el.addEventListener("change", updateLivePreview);
+    }
+  });
+}
+
+// 5. Update Jornada dropdown choices dynamically
+let currentActiveTeamForJornada = "";
+function updateJornadaDropdownOptions(team) {
+  if (team === currentActiveTeamForJornada) return;
+  currentActiveTeamForJornada = team;
+
+  const select = document.getElementById("inp-jornada");
+  if (!select) return;
+
+  const currentVal = select.value;
+  select.innerHTML = '<option value="">-- Seleccionar --</option>';
+
+  if (!team) return;
+
+  // Benjamín S10 has 26 matches, others have 30
+  const totalMatches = team === "Benjamí S10" ? 26 : 30;
+
+  for (let i = 1; i <= totalMatches; i++) {
+    const opt = document.createElement("option");
+    opt.value = i.toString();
+    opt.textContent = `Jornada ${i}`;
+    select.appendChild(opt);
+  }
+
+  if (currentVal && parseInt(currentVal) <= totalMatches) {
+    select.value = currentVal;
   }
 }
 
-// Auto-populate match details based on selected team and matchday
+// 6. Auto-populate from calendar data structure
 function autoPopulateMatchDetails() {
-  const equipoSelect = document.getElementById("inp-equipo");
-  const jornadaSelect = document.getElementById("inp-jornada");
-  if (!equipoSelect || !jornadaSelect) return;
+  const team = document.getElementById("inp-equipo").value;
+  const jornada = document.getElementById("inp-jornada").value;
 
-  const equipo = equipoSelect.value;
-  const jornada = jornadaSelect.value;
+  if (!team || !jornada) return;
 
-  if (!equipo || !jornada) return;
+  if (typeof CD_MANGRANERS_CALENDARS !== "undefined" && CD_MANGRANERS_CALENDARS[team] && CD_MANGRANERS_CALENDARS[team][jornada]) {
+    const match = CD_MANGRANERS_CALENDARS[team][jornada];
 
-  if (typeof CD_MANGRANERS_CALENDARS !== "undefined" && CD_MANGRANERS_CALENDARS[equipo] && CD_MANGRANERS_CALENDARS[equipo][jornada]) {
-    const match = CD_MANGRANERS_CALENDARS[equipo][jornada];
-    
     document.getElementById("inp-rival").value = match.rival || "";
     
-    if (match.condicion === "Local" || match.condicion === "Fuera" || match.condicion === "Visitante") {
+    // Normalize condition values (Local, Visitante, Fuera)
+    if (match.condicion === "Local" || match.condicion === "Visitante" || match.condicion === "Fuera") {
       document.getElementById("inp-condicion").value = match.condicion === "Fuera" ? "Visitante" : match.condicion;
     } else {
       document.getElementById("inp-condicion").value = "Visitante";
     }
-    
+
     document.getElementById("inp-dia").value = match.dia || "";
     document.getElementById("inp-hora").value = match.hora || "";
     document.getElementById("inp-campo").value = match.campo || "";
-    
-    // Auto calculate arrival time (1 hour before)
+
     autoCalculateArrivalTime(match.hora || "");
-    
     updateLivePreview();
   }
 }
 
-// Auto-calculate arrival time exactly 1 hour before match kickoff
-function autoCalculateArrivalTime(matchTime) {
+// 7. Calculate 1 hour before arrival
+function autoCalculateArrivalTime(kickoff) {
   const arrivalInput = document.getElementById("inp-llegada");
   if (!arrivalInput) return;
 
-  if (!matchTime || matchTime.toLowerCase().includes("confirmar") || matchTime.trim() === "-") {
+  if (!kickoff || kickoff.toLowerCase().includes("confirmar") || kickoff.trim() === "-") {
     arrivalInput.value = "A confirmar";
     updateLivePreview();
     return;
   }
 
-  const timeMatch = matchTime.match(/(\d{1,2})[:\.](\d{2})/);
-  if (timeMatch) {
-    let hour = parseInt(timeMatch[1], 10);
-    const minute = timeMatch[2];
-    
-    // Subtract 1 hour
-    hour = (hour - 1 + 24) % 24;
-    
-    // Format back to HH:MM
-    const paddedHour = hour.toString().padStart(2, '0');
-    arrivalInput.value = `${paddedHour}:${minute}`;
+  const matches = kickoff.match(/(\d{1,2})[:\.](\d{2})/);
+  if (matches) {
+    let hh = parseInt(matches[1], 10);
+    const mm = matches[2];
+
+    // Deduct 1 hr
+    hh = (hh - 1 + 24) % 24;
+    const formattedHour = hh.toString().padStart(2, '0');
+    arrivalInput.value = `${formattedHour}:${mm}`;
   } else {
     arrivalInput.value = "A confirmar";
   }
   updateLivePreview();
 }
 
-// Setup Interactive Editors for Convocados & No Convocados
-function setupPlayerEditors() {
-  const convSelect = document.getElementById("sel-available-conv");
-  const noConvSelect = document.getElementById("sel-available-noconv");
+// 8. Player select management & interaction
+function setupInteractiveListControls() {
+  const convSel = document.getElementById("sel-available-conv");
+  const noConvSel = document.getElementById("sel-available-noconv");
 
-  if (convSelect) {
-    convSelect.addEventListener("change", function() {
-      const selectedValue = this.value;
-      if (!selectedValue) return;
+  if (convSel) {
+    convSel.addEventListener("change", function() {
+      const name = this.value;
+      if (!name) return;
 
-      const equipo = document.getElementById("inp-equipo").value;
-      if (!equipo) {
+      const team = document.getElementById("inp-equipo").value;
+      if (!team) {
         alert("Por favor, selecciona un equipo primero.");
         this.value = "";
         return;
       }
 
-      // Check limit (15 for Benjamín/Alevín, 18 for others)
-      const isBenjOrAlev = equipo.toLowerCase().includes("benjam") || equipo.toLowerCase().includes("alev");
+      // Check lists size limits
+      const isBenjOrAlev = team.toLowerCase().includes("benjam") || team.toLowerCase().includes("alev");
       const limit = isBenjOrAlev ? 15 : 18;
       if (convocadosList.length >= limit) {
-        alert(`Límite alcanzado: Esta categoría (${equipo}) admite un máximo de ${limit} jugadores convocados.`);
+        alert(`Límite alcanzado: Las categorías Benjamín y Alevín admiten 15 convocados, las demás un máximo de ${limit}.`);
         this.value = "";
         return;
       }
 
-      if (selectedValue === "__custom__") {
-        const customName = prompt("Introduce el nombre y apellidos del jugador:");
-        if (!customName) {
-          this.value = "";
-          return;
-        }
-        const customPos = prompt("Introduce la demarcación (ej. Defensa, Delantero, Portero):", "Jugador") || "Jugador";
-        
-        convocadosList.push({ name: customName, pos: customPos });
+      if (name === "__custom__") {
+        const cName = prompt("Nombre y apellidos del jugador:");
+        if (!cName) { this.value = ""; return; }
+        const cPos = prompt("Demarcación (ej. Defensa, Portero, Delantero):", "Jugador") || "Jugador";
+        convocadosList.push({ name: cName, pos: cPos });
       } else {
-        // Find player in roster
-        let playerObj = null;
-        if (typeof CD_MANGRANERS_PLAYERS !== "undefined" && CD_MANGRANERS_PLAYERS[equipo]) {
-          playerObj = CD_MANGRANERS_PLAYERS[equipo].find(p => p.name === selectedValue);
+        // Resolve roster pos
+        let rosterObj = null;
+        if (typeof CD_MANGRANERS_PLAYERS !== "undefined" && CD_MANGRANERS_PLAYERS[team]) {
+          rosterObj = CD_MANGRANERS_PLAYERS[team].find(p => p.name === name);
         }
-        if (!playerObj) {
-          playerObj = convocadosList.find(p => p.name === selectedValue) || noConvocadosList.find(p => p.name === selectedValue);
-        }
-        
-        const pos = playerObj ? playerObj.pos : "Jugador";
-        
-        // Remove from No Convocados if present (state synchronization)
-        noConvocadosList = noConvocadosList.filter(p => p.name !== selectedValue);
-        
-        convocadosList.push({ name: selectedValue, pos: pos });
+        const pos = rosterObj ? rosterObj.pos : "Jugador";
+
+        // De-duplicate from non convocados
+        noConvocadosList = noConvocadosList.filter(p => p.name !== name);
+        convocadosList.push({ name, pos });
       }
 
-      this.value = ""; // Reset dropdown
-      renderConvocadosEditor();
-      renderNoConvocadosEditor();
+      this.value = "";
+      renderConvocadosList();
+      renderNoConvocadosList();
       updateLivePreview();
     });
   }
 
-  if (noConvSelect) {
-    noConvSelect.addEventListener("change", function() {
-      const selectedValue = this.value;
-      if (!selectedValue) return;
+  if (noConvSel) {
+    noConvSel.addEventListener("change", function() {
+      const name = this.value;
+      if (!name) return;
 
-      const equipo = document.getElementById("inp-equipo").value;
-      if (!equipo) {
+      const team = document.getElementById("inp-equipo").value;
+      if (!team) {
         alert("Por favor, selecciona un equipo primero.");
         this.value = "";
         return;
       }
 
-      if (selectedValue === "__custom__") {
-        const customName = prompt("Introduce el nombre y apellidos del jugador:");
-        if (!customName) {
-          this.value = "";
-          return;
-        }
-        const customPos = prompt("Introduce la demarcación (ej. Defensa, Delantero, Portero):", "Jugador") || "Jugador";
-        
-        noConvocadosList.push({ name: customName, pos: customPos, reason: "tecnica" });
+      if (name === "__custom__") {
+        const cName = prompt("Nombre y apellidos del jugador:");
+        if (!cName) { this.value = ""; return; }
+        const cPos = prompt("Demarcación (ej. Defensa, Portero, Delantero):", "Jugador") || "Jugador";
+        noConvocadosList.push({ name: cName, pos: cPos, reason: "tecnica" });
       } else {
-        // Find player in roster
-        let playerObj = null;
-        if (typeof CD_MANGRANERS_PLAYERS !== "undefined" && CD_MANGRANERS_PLAYERS[equipo]) {
-          playerObj = CD_MANGRANERS_PLAYERS[equipo].find(p => p.name === selectedValue);
+        let rosterObj = null;
+        if (typeof CD_MANGRANERS_PLAYERS !== "undefined" && CD_MANGRANERS_PLAYERS[team]) {
+          rosterObj = CD_MANGRANERS_PLAYERS[team].find(p => p.name === name);
         }
-        if (!playerObj) {
-          playerObj = convocadosList.find(p => p.name === selectedValue) || noConvocadosList.find(p => p.name === selectedValue);
-        }
-        
-        const pos = playerObj ? playerObj.pos : "Jugador";
-        
-        // Remove from Convocados if present (state synchronization)
-        convocadosList = convocadosList.filter(p => p.name !== selectedValue);
-        
-        noConvocadosList.push({ name: selectedValue, pos: pos, reason: "tecnica" });
+        const pos = rosterObj ? rosterObj.pos : "Jugador";
+
+        // De-duplicate from convocados
+        convocadosList = convocadosList.filter(p => p.name !== name);
+        noConvocadosList.push({ name, pos, reason: "tecnica" });
       }
 
-      this.value = ""; // Reset dropdown
-      renderConvocadosEditor();
-      renderNoConvocadosEditor();
+      this.value = "";
+      renderConvocadosList();
+      renderNoConvocadosList();
       updateLivePreview();
     });
   }
 }
 
-// Render Convocados editor list
-function renderConvocadosEditor() {
-  const container = document.getElementById("convocados-list-container");
-  container.innerHTML = "";
+// 9. Available roster dropdown filter population
+function populateAvailableRosters() {
+  const team = document.getElementById("inp-equipo").value;
+  const convSelect = document.getElementById("sel-available-conv");
+  const noConvSelect = document.getElementById("sel-available-noconv");
 
+  if (!convSelect || !noConvSelect) return;
+
+  convSelect.innerHTML = '<option value="">-- Seleccionar jugador para convocar --</option>';
+  noConvSelect.innerHTML = '<option value="">-- Seleccionar jugador no convocado --</option>';
+
+  if (!team) return;
+
+  const roster = (typeof CD_MANGRANERS_PLAYERS !== "undefined" && CD_MANGRANERS_PLAYERS[team]) ? CD_MANGRANERS_PLAYERS[team] : [];
+
+  // Make list of all candidates (union of roster and custom names currently selected)
+  const namesMap = new Map();
+  roster.forEach(p => namesMap.set(p.name, p.pos));
+  convocadosList.forEach(p => { if(!namesMap.has(p.name)) namesMap.set(p.name, p.pos); });
+  noConvocadosList.forEach(p => { if(!namesMap.has(p.name)) namesMap.set(p.name, p.pos); });
+
+  namesMap.forEach((pos, name) => {
+    const inConv = convocadosList.some(p => p.name === name);
+    const inNoConv = noConvocadosList.some(p => p.name === name);
+
+    if (!inConv && !inNoConv) {
+      const opt1 = document.createElement("option");
+      opt1.value = name;
+      opt1.textContent = `${name} (${pos})`;
+      convSelect.appendChild(opt1);
+
+      const opt2 = document.createElement("option");
+      opt2.value = name;
+      opt2.textContent = `${name} (${pos})`;
+      noConvSelect.appendChild(opt2);
+    }
+  });
+
+  // Add custom player options
+  const customOpt1 = document.createElement("option");
+  customOpt1.value = "__custom__";
+  customOpt1.textContent = "[ + Añadir jugador personalizado... ]";
+  convSelect.appendChild(customOpt1);
+
+  const customOpt2 = document.createElement("option");
+  customOpt2.value = "__custom__";
+  customOpt2.textContent = "[ + Añadir jugador personalizado... ]";
+  noConvSelect.appendChild(customOpt2);
+}
+
+// 10. Render Convocados editor rows
+function renderConvocadosList() {
+  const container = document.getElementById("convocados-list-container");
+  if (!container) return;
+
+  container.innerHTML = "";
   if (convocadosList.length === 0) {
-    container.innerHTML = `<div class="empty-list-placeholder">Ningún jugador convocado aún. Agrégalos en el formulario.</div>`;
+    container.innerHTML = '<div class="empty-list-placeholder">Ningún jugador convocado aún.</div>';
     return;
   }
 
   convocadosList.forEach((p, idx) => {
-    const row = document.createElement("div");
-    row.className = "player-item-row";
-    row.innerHTML = `
-      <input type="text" value="${p.name}" oninput="updateConvocadoName(${idx}, this.value)">
-      <input type="text" value="${p.pos}" oninput="updateConvocadoPos(${idx}, this.value)" style="width: 40%">
-      <button class="remove-btn" onclick="removeConvocado(${idx})" title="Remover jugador">×</button>
+    const div = document.createElement("div");
+    div.className = "player-item-row";
+    div.innerHTML = `
+      <input type="text" value="${p.name}" oninput="updateConvocadoName(${idx}, this.value)" style="flex: 2;">
+      <input type="text" value="${p.pos}" oninput="updateConvocadoPos(${idx}, this.value)" style="flex: 1; max-width: 120px;">
+      <button type="button" class="remove-btn" onclick="removeConvocado(${idx})" title="Remover jugador">&times;</button>
     `;
-    container.appendChild(row);
+    container.appendChild(div);
   });
 }
 
-// Render No Convocados editor list
-function renderNoConvocadosEditor() {
+// 11. Render No Convocados editor rows
+function renderNoConvocadosList() {
   const container = document.getElementById("noconv-list-container");
-  container.innerHTML = "";
+  if (!container) return;
 
+  container.innerHTML = "";
   if (noConvocadosList.length === 0) {
-    container.innerHTML = `<div class="empty-list-placeholder">Ningún no convocado. Agrégalos en el formulario.</div>`;
+    container.innerHTML = '<div class="empty-list-placeholder">Ningún jugador no convocado aún.</div>';
     return;
   }
 
   noConvocadosList.forEach((p, idx) => {
-    const row = document.createElement("div");
-    row.className = "noconv-item-row";
-    row.innerHTML = `
-      <input type="text" value="${p.name}" oninput="updateNoConvocadoName(${idx}, this.value)">
-      <select onchange="updateNoConvocadoReason(${idx}, this.value)">
+    const div = document.createElement("div");
+    div.className = "noconv-item-row";
+    div.innerHTML = `
+      <input type="text" value="${p.name}" oninput="updateNoConvocadoName(${idx}, this.value)" style="flex: 2;">
+      <select onchange="updateNoConvocadoReason(${idx}, this.value)" style="flex: 1; max-width: 130px;">
         <option value="tecnica" ${p.reason === "tecnica" ? "selected" : ""}>D. Técnica</option>
         <option value="lesion" ${p.reason === "lesion" ? "selected" : ""}>Lesión</option>
         <option value="sancion" ${p.reason === "sancion" ? "selected" : ""}>Sanción</option>
       </select>
-      <button class="remove-btn" onclick="removeNoConvocado(${idx})" title="Remover jugador">×</button>
+      <button type="button" class="remove-btn" onclick="removeNoConvocado(${idx})" title="Remover jugador">&times;</button>
     `;
-    container.appendChild(row);
+    container.appendChild(div);
   });
 }
 
-// Editor update functions (scoped globally for DOM onclicks)
+// 12. Globals for inline DOM events
 window.removeConvocado = function(idx) {
   convocadosList.splice(idx, 1);
-  renderConvocadosEditor();
+  renderConvocadosList();
   updateLivePreview();
 };
 window.updateConvocadoName = function(idx, val) {
@@ -538,7 +584,7 @@ window.updateConvocadoPos = function(idx, val) {
 
 window.removeNoConvocado = function(idx) {
   noConvocadosList.splice(idx, 1);
-  renderNoConvocadosEditor();
+  renderNoConvocadosList();
   updateLivePreview();
 };
 window.updateNoConvocadoName = function(idx, val) {
@@ -550,148 +596,47 @@ window.updateNoConvocadoReason = function(idx, val) {
   updateLivePreview();
 };
 
-let lastSelectedTeam = "INIT_PLACEHOLDER"; // ensure initial population triggers
+// 13. Update limits badges in form headers
+function updateConvocadosLimitBadge() {
+  const team = document.getElementById("inp-equipo").value;
+  const badge = document.getElementById("conv-limit-info");
+  if (!badge) return;
 
-function updateJornadaDropdown(team) {
-  if (team === lastSelectedTeam) return;
-  lastSelectedTeam = team;
-
-  const jornadaSelect = document.getElementById("inp-jornada");
-  if (!jornadaSelect) return;
-  
-  const currentVal = jornadaSelect.value;
-  const maxJornadas = team === "Benjamí S10" ? 26 : 30;
-
-  jornadaSelect.innerHTML = '<option value="">-- Seleccionar --</option>';
-  for (let i = 1; i <= maxJornadas; i++) {
-    const opt = document.createElement("option");
-    opt.value = i.toString();
-    opt.textContent = `Jornada ${i}`;
-    jornadaSelect.appendChild(opt);
-  }
-
-  // Restore previous value if within range
-  if (currentVal && parseInt(currentVal) <= maxJornadas) {
-    jornadaSelect.value = currentVal;
-  } else {
-    jornadaSelect.value = "";
-  }
-}
-
-function updateLimitHeader() {
-  const equipo = document.getElementById("inp-equipo").value;
-  const limitSpan = document.getElementById("conv-limit-info");
-  if (!limitSpan) return;
-
-  if (!equipo) {
-    limitSpan.textContent = "(Límite: 18)";
-    limitSpan.style.color = "var(--color-text-muted)";
+  if (!team) {
+    badge.textContent = "(Límite: 18)";
+    badge.style.color = "var(--color-text-muted)";
     return;
   }
 
-  const isBenjOrAlev = equipo.toLowerCase().includes("benjam") || equipo.toLowerCase().includes("alev");
+  const isBenjOrAlev = team.toLowerCase().includes("benjam") || team.toLowerCase().includes("alev");
   const limit = isBenjOrAlev ? 15 : 18;
-  limitSpan.textContent = `(Convocados: ${convocadosList.length}/${limit})`;
-  
+  badge.textContent = `(Convocados: ${convocadosList.length}/${limit})`;
+
   if (convocadosList.length > limit) {
-    limitSpan.style.color = "#ef4444"; // red warning
-    limitSpan.style.fontWeight = "bold";
+    badge.style.color = "var(--color-danger)";
+    badge.style.fontWeight = "bold";
   } else if (convocadosList.length === limit) {
-    limitSpan.style.color = "var(--color-accent)"; // green at limit
-    limitSpan.style.fontWeight = "bold";
+    badge.style.color = "var(--color-accent)";
+    badge.style.fontWeight = "bold";
   } else {
-    limitSpan.style.color = "var(--color-gold)";
-    limitSpan.style.fontWeight = "normal";
+    badge.style.color = "var(--color-accent)";
+    badge.style.fontWeight = "normal";
   }
 }
 
-function populateAvailablePlayersDropdowns() {
-  const equipo = document.getElementById("inp-equipo").value;
-  const convSelect = document.getElementById("sel-available-conv");
-  const noConvSelect = document.getElementById("sel-available-noconv");
-
-  if (!convSelect || !noConvSelect) return;
-
-  // Save current values to avoid resetting if not needed
-  const prevConvVal = convSelect.value;
-  const prevNoConvVal = noConvSelect.value;
-
-  convSelect.innerHTML = '<option value="">-- Seleccionar jugador para convocar --</option>';
-  noConvSelect.innerHTML = '<option value="">-- Seleccionar jugador no convocado --</option>';
-
-  if (!equipo) return;
-
-  const roster = (typeof CD_MANGRANERS_PLAYERS !== "undefined" && CD_MANGRANERS_PLAYERS[equipo]) ? CD_MANGRANERS_PLAYERS[equipo] : [];
-
-  // Union of roster and custom players
-  const allPlayersMap = new Map();
-  roster.forEach(p => {
-    allPlayersMap.set(p.name, { name: p.name, pos: p.pos });
-  });
-  convocadosList.forEach(p => {
-    if (!allPlayersMap.has(p.name)) {
-      allPlayersMap.set(p.name, { name: p.name, pos: p.pos });
-    }
-  });
-  noConvocadosList.forEach(p => {
-    if (!allPlayersMap.has(p.name)) {
-      allPlayersMap.set(p.name, { name: p.name, pos: p.pos });
-    }
-  });
-
-  allPlayersMap.forEach(player => {
-    const isConvocado = convocadosList.some(p => p.name === player.name);
-    const isNoConvocado = noConvocadosList.some(p => p.name === player.name);
-
-    // 1. Populate Convocados dropdown (only if not selected in either list)
-    if (!isConvocado && !isNoConvocado) {
-      const opt = document.createElement("option");
-      opt.value = player.name;
-      opt.textContent = `${player.name} (${player.pos})`;
-      convSelect.appendChild(opt);
-    }
-
-    // 2. Populate No Convocados dropdown (only if not selected in either list)
-    if (!isNoConvocado && !isConvocado) {
-      const opt = document.createElement("option");
-      opt.value = player.name;
-      opt.textContent = `${player.name} (${player.pos})`;
-      noConvSelect.appendChild(opt);
-    }
-  });
-
-  const customConvOpt = document.createElement("option");
-  customConvOpt.value = "__custom__";
-  customConvOpt.textContent = "[ + Añadir jugador personalizado... ]";
-  convSelect.appendChild(customConvOpt);
-
-  const customNoConvOpt = document.createElement("option");
-  customNoConvOpt.value = "__custom__";
-  customNoConvOpt.textContent = "[ + Añadir jugador personalizado... ]";
-  noConvSelect.appendChild(customNoConvOpt);
-
-  // Restore selections if valid
-  if (prevConvVal && Array.from(convSelect.options).some(o => o.value === prevConvVal)) {
-    convSelect.value = prevConvVal;
-  }
-  if (prevNoConvVal && Array.from(noConvSelect.options).some(o => o.value === prevNoConvVal)) {
-    noConvSelect.value = prevNoConvVal;
-  }
-}
-
-// Update Live Preview Sheet HTML
+// 14. Live Preview Builder
 function updateLivePreview() {
   if (!templateHtml) return;
 
-  const equipoVal = document.getElementById("inp-equipo").value || "";
-  updateJornadaDropdown(equipoVal);
-  
-  updateLimitHeader();
-  populateAvailablePlayersDropdowns();
+  const team = document.getElementById("inp-equipo").value || "";
+  updateJornadaDropdownOptions(team);
+  updateConvocadosLimitBadge();
+  populateAvailableRosters();
 
   const previewContainer = document.getElementById("folio-preview-container");
-  
-  // 1. Gather text values
+  if (!previewContainer) return;
+
+  // Gather values from form fields
   const jornada = document.getElementById("inp-jornada").value || "[Número]";
   const equipo = document.getElementById("inp-equipo").value || "[Equipo]";
   const categoria = document.getElementById("inp-categoria").value || "[Categoría]";
@@ -705,16 +650,16 @@ function updateLivePreview() {
   const cuerpo = document.getElementById("inp-cuerpo").value || "[Cuerpo técnico]";
   const obs = document.getElementById("inp-obs").value.trim();
 
-  // 2. Format Convocados rows
+  // Create HTML for convocados player cells
   let convRowsHtml = "";
   if (convocadosList.length === 0) {
-    convRowsHtml = `<div class="folio-empty-placeholder">No se han agregado jugadores convocados</div>`;
+    convRowsHtml = '<div class="folio-empty-placeholder">No se han seleccionado jugadores convocados</div>';
   } else {
     convocadosList.forEach((p, idx) => {
-      const numStr = (idx + 1).toString().padStart(2, '0');
+      const idxStr = (idx + 1).toString().padStart(2, '0');
       convRowsHtml += `
         <div class="folio-player-card">
-          <span class="folio-player-num">${numStr}</span>
+          <span class="folio-player-num">${idxStr}</span>
           <div class="folio-player-details">
             <span class="folio-player-name">${p.name}</span>
             <span class="folio-player-pos">${p.pos}</span>
@@ -724,28 +669,27 @@ function updateLivePreview() {
     });
   }
 
-  // 3. Format No Convocados rows
-  let noConvHtml = "";
-  let showNoConvStyle = "display: block;";
-  if (noConvocadosList.length === 0) {
-    showNoConvStyle = "display: none;";
-  } else {
+  // Create HTML for no convocados rows
+  let noConvRowsHtml = "";
+  const showNoConvStyle = noConvocadosList.length > 0 ? "display: block;" : "display: none;";
+
+  if (noConvocadosList.length > 0) {
     noConvocadosList.forEach(p => {
       let badgeClass = "folio-badge-dt";
-      let badgeText = "Decisión Técnica";
-      let descText = "No convocado por decisión técnica dentro de la planificación deportiva semanal.";
+      let badgeText = "D. Técnica";
+      let descText = "No convocado por decisión técnica o rotación.";
 
       if (p.reason === "lesion") {
         badgeClass = "folio-badge-injury";
         badgeText = "Lesión";
-        descText = "No convocado por situación física o lesión. Pendiente de evolución.";
+        descText = "Baja médica o recuperación física.";
       } else if (p.reason === "sancion") {
         badgeClass = "folio-badge-suspension";
         badgeText = "Sanción";
-        descText = "No convocado por sanción o cumplimiento disciplinario.";
+        descText = "Baja disciplinaria federativa.";
       }
 
-      noConvHtml += `
+      noConvRowsHtml += `
         <div class="folio-no-conv-row">
           <span class="folio-no-conv-badge ${badgeClass}">${badgeText}</span>
           <span class="folio-no-conv-player">${p.name}</span>
@@ -755,18 +699,15 @@ function updateLivePreview() {
     });
   }
 
-  // 4. Format observations
+  // Define signature text
+  const mainDT = cuerpo.split(/y|,/)[0].trim() || "Dirección Deportiva";
+  const signatureLabel = `${mainDT} (DT)`;
+
+  // Replacements
+  const condicionClass = (condicion.toLowerCase() === "visitante" || condicion.toLowerCase() === "fuera") ? "visitante" : "local";
   const showObsStyle = obs ? "display: block;" : "display: none;";
 
-  // 5. Signature label DT
-  // extract first DT name if present
-  let dts = cuerpo.split(/y|,/)[0].trim() || "Dirección Deportiva";
-  const signatureLabel = `${dts} (DT)`;
-
-  // 6. Replace Placeholders in template
-  const condicionClass = (condicion.toLowerCase() === "fuera" || condicion.toLowerCase() === "visitante") ? "fuera" : "";
-
-  let replaced = templateHtml
+  const compiled = templateHtml
     .replace(/{{Jornada}}/g, jornada)
     .replace(/{{Equipo}}/g, equipo)
     .replace(/{{Categoria}}/g, categoria)
@@ -783,48 +724,44 @@ function updateLivePreview() {
     .replace(/{{ShowObservations}}/g, showObsStyle)
     .replace(/{{Observaciones}}/g, obs)
     .replace(/{{ShowNoConvocados}}/g, showNoConvStyle)
-    .replace(/{{NoConvocadosRows}}/g, noConvHtml)
+    .replace(/{{NoConvocadosRows}}/g, noConvRowsHtml)
     .replace(/{{FirmaResponsable}}/g, signatureLabel);
 
-  previewContainer.innerHTML = replaced;
-
-  // Re-scale sheet to fit preview panel size
-  scalePreviewSheet();
+  previewContainer.innerHTML = compiled;
+  scaleLivePreviewPanel();
 }
 
-// Scale the A4 Preview Sheet visually to fit the container width
-function scalePreviewSheet() {
+function forceLiveRefresh() {
+  updateLivePreview();
+}
+
+// 15. Scale the A4 card layout to fit dashboard preview panel
+function scaleLivePreviewPanel() {
   const panel = document.getElementById("preview-panel");
   const wrapper = document.getElementById("preview-scale-wrapper");
   const sheet = document.getElementById("folio-preview-card");
-  
+
   if (!panel || !wrapper || !sheet) return;
 
-  // Force the card to have pdf-export class to match final PDF
-  if (!sheet.classList.contains("pdf-export")) {
-    sheet.classList.add("pdf-export");
-  }
   sheet.classList.remove("preview-mode");
-  sheet.classList.remove("pdf-mode");
+  sheet.classList.add("pdf-export"); // Enforce clean standard DPI scaling class
 
-  // Calculate scaling factor based on the preview panel's width
-  const paddingVal = (parseFloat(window.getComputedStyle(panel).paddingLeft) || 30) + 
-                     (parseFloat(window.getComputedStyle(panel).paddingRight) || 30);
-  const panelWidth = panel.clientWidth - paddingVal;
-  const sheetWidth = 794; // Width of A4 page (210mm) in pixels at 96 DPI
+  const padLeft = parseFloat(window.getComputedStyle(panel).paddingLeft) || 15;
+  const padRight = parseFloat(window.getComputedStyle(panel).paddingRight) || 15;
   
-  let scale = panelWidth / sheetWidth;
-  if (scale > 1) scale = 1; // Don't upscale past 100% of A4 size
-  if (scale < 0.2) scale = 0.2; // Floor scaling at 20% to avoid layout collapses
+  const panelWidth = panel.clientWidth - (padLeft + padRight);
+  const A4Width = 794; // Standard pixel width of A4 page at 96 DPI
 
-  // Apply scaling to the wrapper
+  let scale = panelWidth / A4Width;
+  if (scale > 1.0) scale = 1.0;
+  if (scale < 0.2) scale = 0.2;
+
   wrapper.style.transform = `scale(${scale})`;
   wrapper.style.transformOrigin = "top center";
-  wrapper.style.width = `${sheetWidth}px`;
+  wrapper.style.width = `${A4Width}px`;
   wrapper.style.maxWidth = "100%";
   wrapper.style.margin = "0 auto";
-  
-  // Set wrapper height to the scaled height of the sheet to ensure correct scrolling bounds
+
   const scaledHeight = sheet.offsetHeight * scale;
   wrapper.style.height = `${scaledHeight}px`;
   wrapper.style.marginBottom = "20px";
@@ -832,10 +769,11 @@ function scalePreviewSheet() {
   sheet.style.transform = "none";
 }
 
-// Load Demo Data
-function loadDemoData() {
-  document.getElementById("inp-jornada").value = "1";
+// 16. Load demo dataset
+function loadDemoMatchday() {
   document.getElementById("inp-equipo").value = "Cadet S16";
+  updateJornadaDropdownOptions("Cadet S16");
+  document.getElementById("inp-jornada").value = "1";
   document.getElementById("inp-categoria").value = "Cadet Segona Divisió S16 - Grup 24";
   document.getElementById("inp-rival").value = "CFJ Mollerussa B";
   document.getElementById("inp-dia").value = "Sábado, 13 de junio de 2026";
@@ -847,7 +785,6 @@ function loadDemoData() {
   document.getElementById("inp-cuerpo").value = "Federico Ferreira y Joel Benitez";
   document.getElementById("inp-obs").value = "Presentación en el campo 1 hora antes del partido con la ropa del club.";
 
-  // Convocados
   convocadosList = [
     { name: "Gustavo Felipe Molina Duarte", pos: "Portero" },
     { name: "Ángel Luciano Franco Almada", pos: "Lateral Derecho" },
@@ -867,217 +804,389 @@ function loadDemoData() {
     { name: "Tobias Ezequiel Santacruz Barrios", pos: "Portero" }
   ];
 
-  // No Convocados
   noConvocadosList = [
     { name: "Matias German Aguilera Barrios", pos: "Portero", reason: "tecnica" },
     { name: "Erwin Adriano Cortaza Mareco", pos: "Delantero", reason: "lesion" },
     { name: "Juan Alberto Roman Cardozo", pos: "Lateral Derecho", reason: "sancion" }
   ];
 
-  renderConvocadosEditor();
-  renderNoConvocadosEditor();
+  renderConvocadosList();
+  renderNoConvocadosList();
   updateLivePreview();
 }
 
-// Clear Form
-function clearForm() {
+// 17. Reset form state
+function resetAllInputs() {
   if (confirm("¿Estás seguro de que deseas vaciar todo el formulario?")) {
-    document.getElementById("inp-jornada").value = "";
-    document.getElementById("inp-equipo").value = "";
-    document.getElementById("inp-categoria").value = "";
-    document.getElementById("inp-rival").value = "";
-    document.getElementById("inp-dia").value = "";
-    document.getElementById("inp-hora").value = "";
-    document.getElementById("inp-llegada").value = "";
-    document.getElementById("inp-campo").value = "";
-    document.getElementById("inp-condicion").value = "Visitante";
-    document.getElementById("inp-equipacion").value = "";
-    document.getElementById("inp-cuerpo").value = "";
-    document.getElementById("inp-obs").value = "";
-
+    document.getElementById("convocatoria-form").reset();
     convocadosList = [];
     noConvocadosList = [];
-
-    renderConvocadosEditor();
-    renderNoConvocadosEditor();
+    renderConvocadosList();
+    renderNoConvocadosList();
     updateLivePreview();
   }
 }
 
-// Setup Voice Speech Recognition (Web Speech API)
-let recognition;
-function setupVoiceSpeech() {
-  const btnVoice = document.getElementById("btn-voice-start");
-  const txtVoice = document.getElementById("voice-text-area");
-  const btnProcess = document.getElementById("btn-voice-process");
-  const statusLog = document.getElementById("voice-status-log");
+// 18. Generate WhatsApp Text block
+function shareSquadCallWhatsApp() {
+  const team = document.getElementById("inp-equipo").value || "[Equipo]";
+  const jornada = document.getElementById("inp-jornada").value || "[Jornada]";
+  const rival = document.getElementById("inp-rival").value || "[Rival]";
+  const dia = document.getElementById("inp-dia").value || "[Día]";
+  const hora = document.getElementById("inp-hora").value || "[Hora]";
+  const llegada = document.getElementById("inp-llegada").value || "[Llegada]";
+  const campo = document.getElementById("inp-campo").value || "[Campo]";
+  const cuerpo = document.getElementById("inp-cuerpo").value || "";
 
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-  if (!SpeechRecognition) {
-    statusLog.innerHTML = "Tu navegador no soporta el reconocimiento de voz. Escribe o pega el texto para procesarlo.";
-    btnVoice.disabled = true;
+  if (convocadosList.length === 0) {
+    alert("Por favor, convoca a jugadores antes de compartir.");
     return;
   }
 
-  recognition = new SpeechRecognition();
-  recognition.lang = "es-ES";
-  recognition.continuous = false;
-  recognition.interimResults = false;
+  // Build list strings
+  let convStr = "";
+  convocadosList.forEach((p, idx) => {
+    convStr += `\n*${(idx + 1).toString().padStart(2, '0')}.* ${p.name} (${p.pos})`;
+  });
 
-  btnVoice.addEventListener("click", () => {
+  let noConvStr = "";
+  if (noConvocadosList.length > 0) {
+    noConvStr = "\n\n*Bajas / Rotaciones:*";
+    noConvocadosList.forEach(p => {
+      let rText = "Decisión técnica";
+      if (p.reason === "lesion") rText = "Lesión";
+      if (p.reason === "sancion") rText = "Sanción";
+      noConvStr += `\n- ${p.name} (${rText})`;
+    });
+  }
+
+  const text = `🟢⚪ *CONVOCATORIA OFICIAL — CD MANGRANERS* 🟢⚪
+*Jornada ${jornada}* — Categ. ${team}
+
+🆚 *Rival:* ${rival}
+📅 *Día:* ${dia}
+⏰ *Hora Partido:* ${hora} H
+📍 *Instalación:* ${campo}
+⌚ *Cita en el campo:* ${llegada} H
+👕 *Equipación:* ${document.getElementById("inp-equipacion").value || "Verde/Blanco"}
+
+*JUGADORES CITADOS:*${convStr}${noConvStr}
+
+📋 *Cuerpo Técnico:* ${cuerpo}
+🤝 Som un projecte de formació, competició i valors. ¡Som-hi Mangraners!`;
+
+  // Look up phone of the first DT if available
+  let phoneStr = "";
+  const firstDT = cuerpo.split(/y|,/)[0].trim();
+  if (firstDT && staffDirectory[firstDT]) {
+    phoneStr = staffDirectory[firstDT].digits;
+  }
+
+  let waUrl = `https://wa.me/?text=${encodeURIComponent(text)}`;
+  if (phoneStr) {
+    waUrl = `https://wa.me/34${phoneStr}?text=${encodeURIComponent(text)}`;
+  }
+  
+  window.open(waUrl, "_blank");
+}
+
+// 19. Export to Single-page A4 PDF using isolated layouts
+function downloadAsSinglePagePDF() {
+  const card = document.getElementById("folio-preview-card");
+  if (!card) {
+    alert("Error: No se encontró la tarjeta de convocatoria.");
+    return;
+  }
+
+  if (convocadosList.length === 0) {
+    alert("Agrega jugadores convocados antes de descargar el PDF.");
+    return;
+  }
+
+  const team = document.getElementById("inp-equipo").value || "CD_Mangraners";
+  const jornada = document.getElementById("inp-jornada").value || "X";
+
+  // Elements to toggle layouts during screenshot render
+  const sidebar = document.querySelector(".form-panel");
+  const preview = document.getElementById("preview-panel");
+  const wrapper = document.getElementById("preview-scale-wrapper");
+  const header = document.querySelector(".app-header");
+  const container = document.querySelector(".dashboard-container");
+
+  if (!sidebar || !preview || !wrapper) {
+    alert("Error de estructura en el DOM para la exportación.");
+    return;
+  }
+
+  // Backup scroll states and layouts
+  const scrX = window.scrollX;
+  const scrY = window.scrollY;
+  const oldSidebarDisplay = sidebar.style.display;
+  const oldPreviewFlex = preview.style.flex;
+  const oldPreviewWidth = preview.style.width;
+  const oldPreviewPadding = preview.style.padding;
+  const oldPreviewJustify = preview.style.justifyContent;
+  const oldPreviewAlign = preview.style.alignItems;
+  const oldWrapperMargin = wrapper.style.margin;
+  const oldWrapperMaxWidth = wrapper.style.maxWidth;
+  const oldWrapperJustify = wrapper.style.justifyContent;
+  const oldWrapperTransform = wrapper.style.transform;
+  const oldWrapperWidth = wrapper.style.width;
+  const oldWrapperHeight = wrapper.style.height;
+  const oldHeaderDisplay = header ? header.style.display : "";
+  const oldContainerHeight = container ? container.style.height : "";
+  const oldContainerPadding = container ? container.style.padding : "";
+  const oldContainerMargin = container ? container.style.margin : "";
+
+  // Reset scroll to 0,0
+  window.scrollTo(0, 0);
+
+  // Apply absolute overrides to isolate the preview card at full 100% A4 size
+  if (header) header.style.setProperty("display", "none", "important");
+  if (container) {
+    container.style.setProperty("height", "auto", "important");
+    container.style.setProperty("padding", "0", "important");
+    container.style.setProperty("margin", "0", "important");
+  }
+  sidebar.style.setProperty("display", "none", "important");
+  preview.style.setProperty("flex", "none", "important");
+  preview.style.setProperty("width", "100%", "important");
+  preview.style.setProperty("padding", "0", "important");
+  preview.style.setProperty("justify-content", "flex-start", "important");
+  preview.style.setProperty("align-items", "flex-start", "important");
+  
+  wrapper.style.setProperty("margin", "0", "important");
+  wrapper.style.setProperty("max-width", "100%", "important");
+  wrapper.style.setProperty("justify-content", "flex-start", "important");
+  wrapper.style.setProperty("transform", "none", "important");
+  wrapper.style.setProperty("width", "794px", "important");
+  wrapper.style.setProperty("height", "1123px", "important");
+
+  // Force sheet to use export dimensions layout
+  card.classList.remove("preview-mode");
+  card.classList.add("pdf-export");
+
+  const options = {
+    margin: [0, 0, 0, 0],
+    filename: `Convocatoria_${team.replace(/\s+/g, "_")}_Jornada_${jornada}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2.2, // Clean high resolution print DPI scaling
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    },
+    jsPDF: {
+      unit: 'mm',
+      format: 'a4',
+      orientation: 'portrait'
+    }
+  };
+
+  const restoreLayoutState = () => {
+    window.scrollTo(scrX, scrY);
+    if (header) header.style.display = oldHeaderDisplay;
+    if (container) {
+      container.style.height = oldContainerHeight;
+      container.style.padding = oldContainerPadding;
+      container.style.margin = oldContainerMargin;
+    }
+    sidebar.style.display = oldSidebarDisplay;
+    preview.style.flex = oldPreviewFlex;
+    preview.style.width = oldPreviewWidth;
+    preview.style.padding = oldPreviewPadding;
+    preview.style.justifyContent = oldPreviewJustify;
+    preview.style.alignItems = oldPreviewAlign;
+    wrapper.style.margin = oldWrapperMargin;
+    wrapper.style.maxWidth = oldWrapperMaxWidth;
+    wrapper.style.justifyContent = oldWrapperJustify;
+    wrapper.style.transform = oldWrapperTransform;
+    wrapper.style.width = oldWrapperWidth;
+    wrapper.style.height = oldWrapperHeight;
+
+    card.classList.add("pdf-export");
+    scaleLivePreviewPanel();
+  };
+
+  // Give DOM 200ms to calculate layout changes before screenshot captures
+  setTimeout(() => {
+    html2pdf().set(options).from(card).save().then(() => {
+      restoreLayoutState();
+    }).catch(err => {
+      console.error("html2pdf compiling error:", err);
+      restoreLayoutState();
+      alert("Error al compilar el PDF de Convocatoria.");
+    });
+  }, 200);
+}
+
+// 20. Web Speech API Assistant
+let speechObj = null;
+function setupSpeechRecognitionAssistant() {
+  const btnStart = document.getElementById("btn-voice-start");
+  const txtArea = document.getElementById("voice-text-area");
+  const btnProc = document.getElementById("btn-voice-process");
+  const statusLog = document.getElementById("voice-status-log");
+
+  const SpeechRecognitionClass = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognitionClass) {
+    statusLog.innerHTML = "Reconocimiento de voz no soportado en este navegador.";
+    btnStart.disabled = true;
+    return;
+  }
+
+  speechObj = new SpeechRecognitionClass();
+  speechObj.lang = "es-ES";
+  speechObj.continuous = false;
+  speechObj.interimResults = false;
+
+  btnStart.addEventListener("click", () => {
     try {
-      recognition.start();
-      statusLog.innerHTML = `<span class="pulse-red"></span> Escuchando... Habla ahora.`;
-      btnVoice.disabled = true;
+      speechObj.start();
+      statusLog.innerHTML = `<span class="pulse-red"></span> Grabando voz... Habla ahora.`;
+      btnStart.disabled = true;
     } catch (e) {
       console.error(e);
     }
   });
 
-  recognition.onend = () => {
-    btnVoice.disabled = false;
-    if (statusLog.innerHTML.includes("Escuchando")) {
-      statusLog.innerHTML = "Micrófono desactivado. Puedes pulsar 'Grabar' de nuevo.";
+  speechObj.onend = () => {
+    btnStart.disabled = false;
+    if (statusLog.innerHTML.includes("Grabando")) {
+      statusLog.innerHTML = "Micrófono cerrado. Haz clic en 'Grabar Voz' para intentarlo de nuevo.";
     }
   };
 
-  recognition.onerror = (event) => {
-    statusLog.innerHTML = `Error de micrófono: ${event.error}. Inténtalo de nuevo.`;
-    btnVoice.disabled = false;
+  speechObj.onerror = (e) => {
+    statusLog.innerHTML = `Error del micrófono: ${e.error}.`;
+    btnStart.disabled = false;
   };
 
-  recognition.onresult = (event) => {
-    const text = event.results[0][0].transcript;
-    txtVoice.value = (txtVoice.value ? txtVoice.value + " " : "") + text;
-    statusLog.innerHTML = "Texto dictado transcrito. Haz clic en 'Procesar Dictado' para rellenar.";
+  speechObj.onresult = (e) => {
+    const transcript = e.results[0][0].transcript;
+    txtArea.value = (txtArea.value ? txtArea.value + " " : "") + transcript;
+    statusLog.innerHTML = "Texto dictado. Pulsa 'Procesar Texto' para aplicarlo.";
   };
 
-  // Process text area and autofill form
-  btnProcess.addEventListener("click", () => {
-    const text = txtVoice.value.trim();
+  btnProc.addEventListener("click", () => {
+    const text = txtArea.value.trim();
     if (!text) return;
     
-    parseAndFillVoiceText(text);
-    txtVoice.value = "";
-    statusLog.innerHTML = "¡Formulario autocompletado en base al dictado!";
+    parseVoiceTextAndPopulate(text);
+    txtArea.value = "";
+    statusLog.innerHTML = "Convocatoria interpretada y cargada con éxito.";
   });
 }
 
-// Parse text using regexes and autofill
-function parseAndFillVoiceText(text) {
+// 21. Parse dictated texts with RegEx filters
+function parseVoiceTextAndPopulate(text) {
   const lower = text.toLowerCase();
 
-  // 1. Jornada
-  const jMatch = lower.match(/jornada\s*(\d+)/i);
-  if (jMatch) document.getElementById("inp-jornada").value = jMatch[1];
+  // Jornada Match
+  const jMatches = lower.match(/jornada\s*(\d+)/i);
+  if (jMatches) {
+    document.getElementById("inp-jornada").value = jMatches[1];
+  }
 
-  // 2. Equipo & Categoría
-  // Check for common club categories
-  const categories = [
-    { key: "cadet s16", name: "Cadet S16", cat: "Cadet Segona Divisió S16 - Grup 24" },
-    { key: "juvenil", name: "Juvenil", cat: "JUVENIL SEGONA DIVISIÓ (GRUP 46)" },
-    { key: "benjami s10", name: "Benjamí S10", cat: "PRIMERA DIVISIÓ BENJAMÍ S10 (GRUP 13)" },
-    { key: "aleví s11", name: "Aleví S11", cat: "SEGONA DIVISIÓ ALEVÍ S11 (GRUP 18)" },
-    { key: "alevi s11", name: "Aleví S11", cat: "SEGONA DIVISIÓ ALEVÍ S11 (GRUP 18)" },
-    { key: "aleví s12", name: "Aleví S12", cat: "SEGONA DIVISIÓ ALEVÍ S12 (GRUP 22)" },
-    { key: "alevi s12", name: "Aleví S12", cat: "SEGONA DIVISIÓ ALEVÍ S12 (GRUP 22)" },
-    { key: "infantil s14", name: "Infantil S14", cat: "INFANTIL SEGONA DIVISIÓ S14 (GRUP 28)" },
-    { key: "quarta catalana", name: "Quarta Catalana", cat: "QUARTA CATALANA (GRUP 29)" }
+  // Team Categories Match
+  const teamsList = [
+    { key: "cadet s16", name: "Cadet S16" },
+    { key: "juvenil", name: "Juvenil" },
+    { key: "benjami s10", name: "Benjamí S10" },
+    { key: "benjamí s10", name: "Benjamí S10" },
+    { key: "aleví s11", name: "Aleví S11" },
+    { key: "alevi s11", name: "Aleví S11" },
+    { key: "aleví s12", name: "Aleví S12" },
+    { key: "alevi s12", name: "Aleví S12" },
+    { key: "infantil s14", name: "Infantil S14" },
+    { key: "quarta catalana", name: "Quarta Catalana" }
   ];
-  let catFound = false;
-  for (let c of categories) {
-    if (lower.includes(c.key)) {
-      document.getElementById("inp-equipo").value = c.name;
-      document.getElementById("inp-categoria").value = c.cat;
-      catFound = true;
+  
+  let detectedTeam = "";
+  for (let team of teamsList) {
+    if (lower.includes(team.key)) {
+      detectedTeam = team.name;
+      document.getElementById("inp-equipo").value = team.name;
+      // trigger change event to sync Category, Staff, and reset players lists
+      const event = new Event('change');
+      document.getElementById("inp-equipo").dispatchEvent(event);
       break;
     }
   }
 
-  // 3. Rival
-  const rMatch = text.match(/(?:contra|partido contra|rival|versus)\s+([a-zA-Z0-9\s]+?)(?:,|\ssábado|\sdomingo|\slunes|\smartes|\smiércoles|\sjueves|\sviernes|campo|llegada|equipación|$)/i);
-  if (rMatch) document.getElementById("inp-rival").value = rMatch[1].trim();
-
-  // 4. Día
-  const dMatch = text.match(/(sábado|domingo|lunes|martes|miércoles|jueves|viernes)\s*(\d{1,2}\s+de\s+[a-z]+)?/i);
-  if (dMatch) {
-    let diaText = dMatch[1];
-    if (dMatch[2]) diaText += ", " + dMatch[2];
-    // try to match full date if present
-    const fullDateMatch = text.match(/(sábado|domingo|lunes|martes|miércoles|jueves|viernes)\s+\d{1,2}\s+de\s+[a-z]+(?:\s+de\s+\d{4})?/i);
-    document.getElementById("inp-dia").value = fullDateMatch ? fullDateMatch[0] : diaText;
+  // Rival Match
+  const rMatches = text.match(/(?:contra|partido contra|rival|versus)\s+([a-zA-Z0-9\s]+?)(?:,|\ssábado|\sdomingo|\slunes|\smartes|\smiércoles|\sjueves|\sviernes|campo|llegada|equipación|$)/i);
+  if (rMatches) {
+    document.getElementById("inp-rival").value = rMatches[1].trim();
   }
 
-  // 5. Hora del partido
-  const hMatch = text.match(/(?:a las|hora)\s+(\d{1,2}[:\.]\d{2})/i);
-  if (hMatch) {
-    const matchTime = hMatch[1].replace(".", ":");
-    document.getElementById("inp-hora").value = matchTime;
-    autoCalculateArrivalTime(matchTime);
+  // Match Day
+  const dMatches = text.match(/(sábado|domingo|lunes|martes|miércoles|jueves|viernes)\s*(\d{1,2}\s+de\s+[a-z]+)?/i);
+  if (dMatches) {
+    let day = dMatches[1];
+    if (dMatches[2]) day += ", " + dMatches[2];
+    const fullDateMatches = text.match(/(sábado|domingo|lunes|martes|miércoles|jueves|viernes)\s+\d{1,2}\s+de\s+[a-z]+(?:\s+de\s+\d{4})?/i);
+    document.getElementById("inp-dia").value = fullDateMatches ? fullDateMatches[0] : day;
   }
 
-  // 6. Llegada
-  const llMatch = text.match(/(?:llegada a las|llegada|citar a las)\s+(\d{1,2}[:\.]\d{2})/i);
-  if (llMatch) {
-    document.getElementById("inp-llegada").value = llMatch[1].replace(".", ":");
-  } else if (hMatch) {
-    autoCalculateArrivalTime(document.getElementById("inp-hora").value);
+  // Kickoff time
+  const hMatches = text.match(/(?:a las|hora)\s+(\d{1,2}[:\.]\d{2})/i);
+  if (hMatches) {
+    const time = hMatches[1].replace(".", ":");
+    document.getElementById("inp-hora").value = time;
+    autoCalculateArrivalTime(time);
   }
 
-  // 7. Campo
-  const cMatch = text.match(/(?:campo|instalación|en el campo|en)\s+([a-zA-Z0-9\s]+?)(?:,|\sequipación|cuerpo|convocados|$)/i);
-  if (cMatch && !cMatch[1].toLowerCase().includes("llegada") && !cMatch[1].toLowerCase().includes("camiseta")) {
-    document.getElementById("inp-campo").value = cMatch[1].trim();
+  // Arrival time
+  const llMatches = text.match(/(?:llegada a las|llegada|citar a las)\s+(\d{1,2}[:\.]\d{2})/i);
+  if (llMatches) {
+    document.getElementById("inp-llegada").value = llMatches[1].replace(".", ":");
   }
 
-  // 8. Equipación
-  const eMatch = text.match(/(?:equipación|camiseta)\s+([a-zA-Z0-9\s,]+?)(?:,|\sconvocados|cuerpo|$)/i);
-  if (eMatch) {
-    const kitText = eMatch[1].toLowerCase();
-    const kitSelect = document.getElementById("inp-equipacion");
-    if (kitText.includes("segunda") || kitText.includes("2") || kitText.includes("negra") || kitText.includes("alternativa")) {
-      kitSelect.value = "2ª Equipación (Negra)";
+  // Campo Match
+  const cMatches = text.match(/(?:campo|instalación|en el campo|en)\s+([a-zA-Z0-9\s]+?)(?:,|\sequipación|cuerpo|convocados|$)/i);
+  if (cMatches && !cMatches[1].toLowerCase().includes("llegada") && !cMatches[1].toLowerCase().includes("camiseta")) {
+    document.getElementById("inp-campo").value = cMatches[1].trim();
+  }
+
+  // Kit Check
+  const eMatches = text.match(/(?:equipación|camiseta)\s+([a-zA-Z0-9\s,]+?)(?:,|\sconvocados|cuerpo|$)/i);
+  if (eMatches) {
+    const kit = eMatches[1].toLowerCase();
+    const selectKit = document.getElementById("inp-equipacion");
+    if (kit.includes("segunda") || kit.includes("2") || kit.includes("negra")) {
+      selectKit.value = "2ª Equipación (Negra)";
     } else {
-      kitSelect.value = "1ª Equipación (Verde/Blanco)";
+      selectKit.value = "1ª Equipación (Verde/Blanco)";
     }
   }
 
-  // 9. Convocados Parsing
-  // Matches everything after "convocados" up to "no convocados", "cuerpo" or the end
-  const convBlockMatch = text.match(/convocados\s+([^#]+?)(?:no convocados|cuerpo técnico|cuerpo|observaciones|$)/i);
-  if (convBlockMatch) {
-    const listText = convBlockMatch[1];
-    // Split by commas, "y" or "o"
-    const names = listText.split(/,|\by\b|\bo\b/).map(n => n.trim()).filter(n => n.length > 2);
-    
-    const equipoVal = document.getElementById("inp-equipo").value || "";
-    const isBenjOrAlev = equipoVal.toLowerCase().includes("benjam") || equipoVal.toLowerCase().includes("alev");
-    const limit = isBenjOrAlev ? 15 : 18;
+  // Parse Convocados list block
+  const convBlock = text.match(/convocados\s+([^#]+?)(?:no convocados|cuerpo técnico|cuerpo|observaciones|$)/i);
+  if (convBlock) {
+    const names = convBlock[1].split(/,|\by\b|\bo\b/).map(n => n.trim()).filter(n => n.length > 2);
+    const limit = (detectedTeam.toLowerCase().includes("benjam") || detectedTeam.toLowerCase().includes("alev")) ? 15 : 18;
 
     convocadosList = names.map(n => {
-      // Clean names
-      let name = n.charAt(0).toUpperCase() + n.slice(1);
-      return { name, pos: "Jugador" };
+      let capName = n.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+      return { name: capName, pos: "Jugador" };
     });
 
     if (convocadosList.length > limit) {
-      alert(`Se han detectado ${convocadosList.length} jugadores en el dictado, pero la categoría ${equipoVal || "actual"} admite un máximo de ${limit}. Se han seleccionado los primeros ${limit}.`);
+      alert(`Se detectaron ${convocadosList.length} jugadores en el dictado. Se importaron los primeros ${limit}.`);
       convocadosList = convocadosList.slice(0, limit);
     }
-
-    renderConvocadosEditor();
+    renderConvocadosList();
   }
 
-  // 10. No Convocados Parsing
-  const noConvBlockMatch = text.match(/no convocados\s+([^#]+?)(?:observaciones|cuerpo|$)/i);
-  if (noConvBlockMatch) {
-    const listText = noConvBlockMatch[1];
-    const items = listText.split(/,|\by\b/).map(n => n.trim()).filter(n => n.length > 2);
+  // Parse No Convocados block
+  const noConvBlock = text.match(/no convocados\s+([^#]+?)(?:observaciones|cuerpo|$)/i);
+  if (noConvBlock) {
+    const items = noConvBlock[1].split(/,|\by\b/).map(n => n.trim()).filter(n => n.length > 2);
     
     noConvocadosList = items.map(item => {
       let name = item;
-      let reason = "tecnica"; // default
+      let reason = "tecnica";
 
       if (item.includes("lesión") || item.includes("lesion")) {
         reason = "lesion";
@@ -1089,186 +1198,11 @@ function parseAndFillVoiceText(text) {
         name = item.replace(/por decisión técnica|por decision tecnica|decision tecnica/gi, "").trim();
       }
 
-      // Clean capitalize
       name = name.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
       return { name, pos: "Jugador", reason };
     });
-    renderNoConvocadosEditor();
+    renderNoConvocadosList();
   }
 
   updateLivePreview();
-}
-
-// Download PDF using html2pdf with offscreen position fixed temporary shift and isolated styles
-function downloadPDF() {
-  const element = document.getElementById("folio-preview-card");
-  if (!element) {
-    alert("Error: No se encontró la convocatoria generada.");
-    return;
-  }
-
-  if (convocadosList.length === 0) {
-    alert("Agrega jugadores convocados antes de descargar el PDF.");
-    return;
-  }
-
-  const jornada = document.getElementById("inp-jornada").value || "X";
-  const equipo = document.getElementById("inp-equipo").value || "Equipo";
-  
-  // Check limit (15 for Benjamín/Alevín, 18 for others)
-  const isBenjOrAlev = equipo.toLowerCase().includes("benjam") || equipo.toLowerCase().includes("alev");
-  const limit = isBenjOrAlev ? 15 : 18;
-  if (convocadosList.length > limit) {
-    alert(`No se puede descargar el PDF: Has convocado a ${convocadosList.length} jugadores, pero el máximo para la categoría de ${equipo} es ${limit}.`);
-    return;
-  }
-
-  const formPanel = document.querySelector(".form-panel");
-  const previewPanel = document.getElementById("preview-panel");
-  const scaleWrapper = document.getElementById("preview-scale-wrapper");
-
-  if (!formPanel || !previewPanel || !scaleWrapper) {
-    alert("Error al inicializar la exportación.");
-    return;
-  }
-
-  // Save original styles
-  const origFormDisplay = formPanel.style.display;
-  const origPanelFlex = previewPanel.style.flex;
-  const origPanelWidth = previewPanel.style.width;
-  const origPanelPadding = previewPanel.style.padding;
-  const origPanelJustify = previewPanel.style.justifyContent;
-  const origPanelAlign = previewPanel.style.alignItems;
-  const origWrapperMargin = scaleWrapper.style.margin;
-  const origWrapperMaxWidth = scaleWrapper.style.maxWidth;
-  const origWrapperJustify = scaleWrapper.style.justifyContent;
-  const origWrapperTransform = scaleWrapper.style.transform;
-  const origWrapperWidth = scaleWrapper.style.width;
-  const origWrapperHeight = scaleWrapper.style.height;
-
-  // Apply temporary print styles to make the preview card align to 0,0 at full width and unscaled
-  formPanel.style.setProperty("display", "none", "important");
-  previewPanel.style.setProperty("flex", "none", "important");
-  previewPanel.style.setProperty("width", "100%", "important");
-  previewPanel.style.setProperty("padding", "0", "important");
-  previewPanel.style.setProperty("justify-content", "flex-start", "important");
-  previewPanel.style.setProperty("align-items", "flex-start", "important");
-  
-  scaleWrapper.style.setProperty("margin", "0", "important");
-  scaleWrapper.style.setProperty("max-width", "100%", "important");
-  scaleWrapper.style.setProperty("justify-content", "flex-start", "important");
-  scaleWrapper.style.setProperty("transform", "none", "important");
-  scaleWrapper.style.setProperty("width", "794px", "important");
-  scaleWrapper.style.setProperty("height", "auto", "important");
-
-  // Force the card to have pdf-export class
-  element.classList.remove("preview-mode");
-  element.classList.remove("pdf-mode");
-  element.classList.add("pdf-export");
-
-  // Configure html2pdf options
-  const opt = {
-    margin: 0,
-    filename: `Convocatoria_Jornada_${jornada}_${equipo.replace(/\s+/g, "_")}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#ffffff'
-    },
-    jsPDF: {
-      unit: 'mm',
-      format: 'a4',
-      orientation: 'portrait'
-    },
-    pagebreak: {
-      mode: ['css', 'legacy'],
-      avoid: [
-        '.folio-player-card', 
-        '.folio-no-conv-card', 
-        '.folio-match-card', 
-        '.folio-obs-card', 
-        '.folio-squad-section', 
-        '.folio-bottom-block', 
-        '.folio-header', 
-        '.folio-main-title-block', 
-        '.folio-footer'
-      ]
-    }
-  };
-
-  const restoreStyles = () => {
-    // Restore original layouts and styles
-    formPanel.style.display = origFormDisplay;
-    previewPanel.style.flex = origPanelFlex;
-    previewPanel.style.width = origPanelWidth;
-    previewPanel.style.padding = origPanelPadding;
-    previewPanel.style.justifyContent = origPanelJustify;
-    previewPanel.style.alignItems = origPanelAlign;
-    scaleWrapper.style.margin = origWrapperMargin;
-    scaleWrapper.style.maxWidth = origWrapperMaxWidth;
-    scaleWrapper.style.justifyContent = origWrapperJustify;
-    scaleWrapper.style.transform = origWrapperTransform;
-    scaleWrapper.style.width = origWrapperWidth;
-    scaleWrapper.style.height = origWrapperHeight;
-
-    // The screen preview now ALWAYS uses pdf-export class
-    element.classList.remove("preview-mode");
-    element.classList.remove("pdf-mode");
-    element.classList.add("pdf-export");
-
-    scalePreviewSheet();
-  };
-
-  // Wait 250ms for DOM layout and style calculations to complete
-  setTimeout(() => {
-    html2pdf().set(opt).from(element).save().then(() => {
-      restoreStyles();
-    }).catch(e => {
-      console.error("Error compiling PDF:", e);
-      restoreStyles();
-      alert("Error al compilar el PDF. Inténtalo de nuevo.");
-    });
-  }, 250);
-}
-
-// Robust function alias as requested
-const descargarPDF = downloadPDF;
-
-// Open WhatsApp prepared message
-function sendWhatsApp() {
-  const jornada = document.getElementById("inp-jornada").value || "[Jornada]";
-  const equipo = document.getElementById("inp-equipo").value || "[Equipo]";
-  const rival = document.getElementById("inp-rival").value || "[Rival]";
-  const dia = document.getElementById("inp-dia").value || "[Día]";
-  const hora = document.getElementById("inp-hora").value || "[Hora]";
-  const llegada = document.getElementById("inp-llegada").value || "[Llegada]";
-  const campo = document.getElementById("inp-campo").value || "[Campo]";
-  const cuerpo = document.getElementById("inp-cuerpo").value;
-
-  // Check limit (15 for Benjamín/Alevín, 18 for others)
-  const isBenjOrAlev = equipo.toLowerCase().includes("benjam") || equipo.toLowerCase().includes("alev");
-  const limit = isBenjOrAlev ? 15 : 18;
-  if (convocadosList.length > limit) {
-    alert(`No se puede enviar por WhatsApp: Has convocado a ${convocadosList.length} jugadores, pero el máximo para la categoría de ${equipo} es ${limit}.`);
-    return;
-  }
-
-  // Extract DT phone if known
-  let phoneStr = "";
-  let dts = cuerpo.split(/y|,/)[0].trim();
-  if (dts && staffDirectory[dts]) {
-    phoneStr = staffDirectory[dts].digits;
-  }
-
-  const msg = `Convocatoria Jornada ${jornada} — ${equipo} vs ${rival}. Partido el ${dia} a las ${hora}. Llegada a las ${llegada}. Campo: ${campo}.`;
-  
-  // Format WhatsApp link (with phone number if found, otherwise generic link)
-  let url = `https://wa.me/?text=${encodeURIComponent(msg)}`;
-  if (phoneStr) {
-    url = `https://wa.me/34${phoneStr}?text=${encodeURIComponent(msg)}`;
-  }
-
-  // Open link
-  window.open(url, "_blank");
 }

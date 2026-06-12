@@ -1,0 +1,16 @@
+# Local backups
+*.bak.html
+*.bak.css
+*.bak.js
+*bak*
+
+# OS files
+.DS_Store
+
+# Temporary test directories/outputs
+test_downloads/
+test_output.pdf
+
+# Scratch/diagnostic scripts
+scratch_*.py
+check_pdf.py

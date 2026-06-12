@@ -3,16 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planificador de Convocatorias - CD Mangraners</title>
+  <title>CD Mangraners - Creador de Convocatorias</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- App Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=2">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
   
+  <!-- External Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
@@ -20,8 +21,7 @@
   <!-- App Header -->
   <header class="app-header">
     <div class="app-brand">
-      <!-- Loaded from parent folder, with fallback if not found -->
-      <img src="ESCUDO.jpg" alt="CD Mangraners Escudo" class="app-logo">
+      <img src="logo_club.jpg" alt="CD Mangraners Logo" class="app-logo" onerror="this.src='logo_club.png';">
       <div class="app-title-block">
         <h1 class="app-title">CD Mangraners</h1>
         <span class="app-subtitle">Planificador de Convocatorias</span>
@@ -30,82 +30,44 @@
     <div class="app-status-badge">Portal del Entrenador</div>
   </header>
 
-  <!-- Dashboard Main Container -->
+  <!-- Dashboard Container -->
   <div class="dashboard-container">
     
-    <!-- Sidebar Inputs Form Panel -->
+    <!-- Sidebar Form Controls -->
     <aside class="form-panel">
       
-      <!-- Voice Assistant Section -->
+      <!-- Voice Dictation Assistant Card -->
       <div class="voice-assistant-card">
         <div class="voice-status">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
-          <span id="voice-status-log">Dictado por voz inactivo</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" x2="12" y1="19" y2="22"/>
+          </svg>
+          <span id="voice-status-log">Asistente por voz inactivo</span>
         </div>
-        <textarea id="voice-text-area" placeholder="Dicta la convocatoria o escribe/pega un texto aquí..." rows="3"></textarea>
+        <textarea id="voice-text-area" placeholder="Dicta los detalles del partido (Jornada, rival, fecha, convocados...) o pégalos aquí..." rows="3"></textarea>
         <div style="display: flex; gap: 10px;">
-          <button id="btn-voice-start" class="btn btn-accent" style="flex: 1;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-            Grabar por Voz
-          </button>
-          <button id="btn-voice-process" class="btn btn-primary" style="flex: 1;">Procesar Dictado</button>
+          <button type="button" id="btn-voice-start" class="btn btn-gold" style="flex: 1;">Grabar Voz</button>
+          <button type="button" id="btn-voice-process" class="btn btn-primary" style="flex: 1;">Procesar Texto</button>
         </div>
       </div>
 
-      <!-- Main Form -->
+      <!-- Main Input Form -->
       <form id="convocatoria-form" onsubmit="event.preventDefault();">
         
-        <!-- Section 1: Datos del Encuentro -->
+        <!-- Section 1: Match Data -->
         <div class="form-section">
           <h3 class="form-section-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
             Datos del Partido
           </h3>
           <div class="form-grid">
-            <div class="form-group">
-              <label for="inp-jornada">Jornada</label>
-              <select id="inp-jornada">
-                <option value="">-- Seleccionar --</option>
-                <option value="1">Jornada 1</option>
-                <option value="2">Jornada 2</option>
-                <option value="3">Jornada 3</option>
-                <option value="4">Jornada 4</option>
-                <option value="5">Jornada 5</option>
-                <option value="6">Jornada 6</option>
-                <option value="7">Jornada 7</option>
-                <option value="8">Jornada 8</option>
-                <option value="9">Jornada 9</option>
-                <option value="10">Jornada 10</option>
-                <option value="11">Jornada 11</option>
-                <option value="12">Jornada 12</option>
-                <option value="13">Jornada 13</option>
-                <option value="14">Jornada 14</option>
-                <option value="15">Jornada 15</option>
-                <option value="16">Jornada 16</option>
-                <option value="17">Jornada 17</option>
-                <option value="18">Jornada 18</option>
-                <option value="19">Jornada 19</option>
-                <option value="20">Jornada 20</option>
-                <option value="21">Jornada 21</option>
-                <option value="22">Jornada 22</option>
-                <option value="23">Jornada 23</option>
-                <option value="24">Jornada 24</option>
-                <option value="25">Jornada 25</option>
-                <option value="26">Jornada 26</option>
-                <option value="27">Jornada 27</option>
-                <option value="28">Jornada 28</option>
-                <option value="29">Jornada 29</option>
-                <option value="30">Jornada 30</option>
-                <option value="31">Jornada 31</option>
-                <option value="32">Jornada 32</option>
-                <option value="33">Jornada 33</option>
-                <option value="34">Jornada 34</option>
-                <option value="35">Jornada 35</option>
-                <option value="36">Jornada 36</option>
-                <option value="37">Jornada 37</option>
-                <option value="38">Jornada 38</option>
-              </select>
-            </div>
             <div class="form-group">
               <label for="inp-equipo">Equipo</label>
               <select id="inp-equipo">
@@ -117,6 +79,12 @@
                 <option value="Cadet S16">Cadet S16</option>
                 <option value="Juvenil">Juvenil</option>
                 <option value="Quarta Catalana">Quarta Catalana</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inp-jornada">Jornada</label>
+              <select id="inp-jornada">
+                <option value="">-- Seleccionar --</option>
               </select>
             </div>
             <div class="form-group full-width">
@@ -134,43 +102,46 @@
             </div>
             <div class="form-group">
               <label for="inp-rival">Rival</label>
-              <input type="text" id="inp-rival" placeholder="Ej. CFJ Mollerussa B">
+              <input type="text" id="inp-rival" placeholder="CFJ Mollerussa B">
             </div>
             <div class="form-group">
-              <label for="inp-condicion">Local / Visitante</label>
+              <label for="inp-condicion">Condición</label>
               <select id="inp-condicion">
                 <option value="Local">Local</option>
-                <option value="Visitante" selected>Visitante</option>
+                <option value="Visitante">Visitante</option>
               </select>
             </div>
             <div class="form-group">
               <label for="inp-dia">Día del Partido</label>
-              <input type="text" id="inp-dia" placeholder="Ej. Sábado, 13 de junio de 2026">
+              <input type="text" id="inp-dia" placeholder="Sábado, 13 de junio de 2026">
             </div>
             <div class="form-group">
-              <label for="inp-hora">Hora del Partido</label>
-              <input type="text" id="inp-hora" placeholder="Ej. 17:45">
+              <label for="inp-hora">Hora Partido</label>
+              <input type="text" id="inp-hora" placeholder="17:45">
             </div>
             <div class="form-group">
-              <label for="inp-llegada">Hora de Llegada</label>
-              <input type="text" id="inp-llegada" placeholder="Ej. 17:00">
+              <label for="inp-llegada">Hora Llegada</label>
+              <input type="text" id="inp-llegada" placeholder="16:45">
             </div>
             <div class="form-group">
-              <label for="inp-campo">Campo / Instalación</label>
-              <input type="text" id="inp-campo" placeholder="Ej. Camp Municipal de Mollerussa">
+              <label for="inp-campo">Campo de Juego</label>
+              <input type="text" id="inp-campo" placeholder="Camp Municipal de Mollerussa">
             </div>
           </div>
         </div>
-
-        <!-- Section 2: Indumentaria y Cuerpo Técnico -->
-        <div class="form-section" style="margin-top: 20px;">
+        
+        <!-- Section 2: Kit and Staff Details -->
+        <div class="form-section">
           <h3 class="form-section-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9Z"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
             Detalles y Personal
           </h3>
           <div class="form-grid">
             <div class="form-group full-width">
-              <label for="inp-equipacion">Equipación</label>
+              <label for="inp-equipacion">Equipación Oficial</label>
               <select id="inp-equipacion">
                 <option value="">-- Seleccionar --</option>
                 <option value="1ª Equipación (Verde/Blanco)">1ª Equipación (Verde/Blanco)</option>
@@ -179,27 +150,21 @@
             </div>
             <div class="form-group full-width">
               <label for="inp-cuerpo">Cuerpo Técnico</label>
-              <input type="text" id="inp-cuerpo" placeholder="Ej. Federico Ferreira y Joel Benitez">
+              <input type="text" id="inp-cuerpo" placeholder="Federico Ferreira y Joel Benitez">
             </div>
           </div>
         </div>
 
-        <!-- Section 3: Observaciones -->
-        <div class="form-section" style="margin-top: 20px;">
+        <!-- Section 3: Squad Call Selection -->
+        <div class="form-section">
           <h3 class="form-section-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Observaciones
-          </h3>
-          <div class="form-group">
-            <textarea id="inp-obs" placeholder="Observaciones o notas adicionales de la citación (ej. puntualidad, ropa del club, etc.)..."></textarea>
-          </div>
-        </div>
-
-        <!-- Section 4: Convocados -->
-        <div class="form-section" style="margin-top: 20px;">
-          <h3 class="form-section-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            Jugadores Convocados <span id="conv-limit-info" style="font-size: 11px; text-transform: none; color: var(--color-gold); font-weight: normal; margin-left: auto;">(Límite: 18)</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Jugadores Convocados <span id="conv-limit-info" style="margin-left: auto;">(Límite: 18)</span>
           </h3>
           <div class="player-list-editor">
             <div class="add-player-row">
@@ -208,15 +173,17 @@
               </select>
             </div>
             <div id="convocados-list-container">
-              <!-- Dynamically populated -->
+              <!-- Rendered dynamically -->
             </div>
           </div>
         </div>
 
-        <!-- Section 5: No Convocados -->
-        <div class="form-section" style="margin-top: 20px;">
+        <!-- Section 4: Non-called Players -->
+        <div class="form-section">
           <h3 class="form-section-title">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="8" x2="23" y2="14"/><line x1="23" y1="8" x2="17" y2="14"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="8" x2="23" y2="14"/><line x1="23" y1="8" x2="17" y2="14"/>
+            </svg>
             Jugadores No Convocados
           </h3>
           <div class="player-list-editor">
@@ -226,29 +193,42 @@
               </select>
             </div>
             <div id="noconv-list-container">
-              <!-- Dynamically populated -->
+              <!-- Rendered dynamically -->
             </div>
           </div>
         </div>
 
-        <!-- Bottom Action Controls -->
+        <!-- Section 5: Additional Observations -->
+        <div class="form-section">
+          <h3 class="form-section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Observaciones
+          </h3>
+          <div class="form-group">
+            <textarea id="inp-obs" placeholder="Ropa de presentación, puntualidad, o cualquier otra instrucción técnica..."></textarea>
+          </div>
+        </div>
+
+        <!-- Toolbar Actions Grid -->
         <div class="action-buttons-grid">
           <button type="button" id="btn-generate" class="btn btn-primary">Generar Convocatoria</button>
           <button type="button" id="btn-load-demo" class="btn btn-secondary">Cargar Ejemplo</button>
           <button type="button" id="btn-download-pdf" class="btn btn-gold">Descargar PDF</button>
-          <button type="button" id="btn-send-whatsapp" class="btn btn-whatsapp">Enviar por WhatsApp</button>
           <button type="button" id="btn-clear" class="btn btn-danger">Limpiar Formulario</button>
+          <button type="button" id="btn-send-whatsapp" class="btn btn-whatsapp">Compartir WhatsApp</button>
         </div>
 
       </form>
     </aside>
     
-    <!-- Live Preview Right Panel -->
-    <main id="preview-panel" class="preview-panel">
+    <!-- Real-time Interactive Preview Pane -->
+    <main class="preview-panel" id="preview-panel">
       <div id="preview-scale-wrapper" class="preview-scale-wrapper">
         <div id="folio-preview-card" class="folio-container pdf-export">
-          <div id="folio-preview-container" style="width: 100%; display: flex; flex-direction: column; gap: inherit; height: 100%;">
-            <!-- Plantilla / fallback will load here -->
+          <div id="folio-preview-container" style="width: 100%; display: flex; flex-direction: column; height: 100%;">
+            <!-- Loaded dynamically from template -->
           </div>
         </div>
       </div>
@@ -256,9 +236,9 @@
 
   </div>
 
-  <!-- App Data and Controller Script -->
+  <!-- Data & Logic Modules -->
   <script src="calendar_data.js"></script>
-  <script src="players_data.js?v=3"></script>
-  <script src="script.js?v=3"></script>
+  <script src="players_data.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
